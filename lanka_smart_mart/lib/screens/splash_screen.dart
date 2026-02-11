@@ -48,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen>
     @override
     Widget build(BuildContext context) {
         return Scaffold(
-            backgroundColor: const Color(0xFF13EC5B),
+            backgroundColor: const Color(0xFF00EC56),
             body: SafeArea(
                 child: SizedBox.expand(
                     child: Column(
@@ -84,7 +84,7 @@ class _SplashScreenState extends State<SplashScreen>
                                                     ),
                                                 ),
                                             ),
-                                            const SizedBox(height: 80),
+                                            const SizedBox(height: 40),
                                             Text(
                                                 'LANKA SMART',
                                                 textAlign: TextAlign.center,
@@ -92,7 +92,7 @@ class _SplashScreenState extends State<SplashScreen>
                                                     color: Colors.white,
                                                     fontSize: 22,
                                                     fontWeight: FontWeight.bold,
-                                                    letterSpacing: 1.2,
+                                                    letterSpacing: 0.5,
                                                 ),
                                             ),
                                             Text(
@@ -102,7 +102,7 @@ class _SplashScreenState extends State<SplashScreen>
                                                     color: Colors.white,
                                                     fontSize: 22,
                                                     fontWeight: FontWeight.bold,
-                                                    letterSpacing: 1.2,
+                                                    letterSpacing: 0.5,
                                                 ),
                                             ),
                                             const SizedBox(height: 8),
@@ -110,9 +110,9 @@ class _SplashScreenState extends State<SplashScreen>
                                                 'Freshness Delivered to Your Doorstep',
                                                 textAlign: TextAlign.center,
                                                 style: GoogleFonts.workSans(
-                                                    color: Colors.white.withOpacity(0.7),
+                                                    color: Colors.white,
                                                     fontSize: 15,
-                                                    fontWeight: FontWeight.w400,
+                                                    fontWeight: FontWeight.w500,
                                                 ),
                                             ),
                                         ],
