@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'home_screen.dart';
+import 'permission_screen.dart';
 import 'signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _handleLogin() {
     Navigator.of(context).pushReplacement(MaterialPageRoute(
-      builder: (context) => const HomeScreen(),
+      builder: (context) => const PermissionScreen(),
     ));
   }
 
