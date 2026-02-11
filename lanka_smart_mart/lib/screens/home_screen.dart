@@ -11,7 +11,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedBranch = 0;
-  int _selectedCategory = 0;
+  //int _selectedCategory = 0;
   int _currentPromoIndex = 0;
   int _selectedBottomNav = 0;
 
