@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'grocery_screen.dart';
+import '../widgets/bottom_navigation_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -420,6 +421,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           itemCount: 6,
                           itemBuilder: (context, index) {
+                            final discounts = ['20% Off', '15% Off', '30% Off', '25% Off', '20% Off', '35% Off'];
                             return Container(
                               width: 173,
                               height: 269,
@@ -436,19 +438,45 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               child: Column(
                                 children: [
-                                  Container(
-                                    width: 142,
-                                    height: 153,
-                                    margin: const EdgeInsets.all(12),
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[200],
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child: Icon(
-                                      Icons.image,
-                                      size: 48,
-                                      color: Colors.grey[400],
-                                    ),
+                                  Stack(
+                                    children: [
+                                      Container(
+                                        width: 142,
+                                        height: 153,
+                                        margin: const EdgeInsets.all(12),
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[200],
+                                          borderRadius: BorderRadius.circular(12),
+                                        ),
+                                        child: Icon(
+                                          Icons.image,
+                                          size: 48,
+                                          color: Colors.grey[400],
+                                        ),
+                                      ),
+                                      Positioned(
+                                        top: 16,
+                                        left: 16,
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 12,
+                                            vertical: 6,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFFF3B30),
+                                            borderRadius: BorderRadius.circular(12),
+                                          ),
+                                          child: Text(
+                                            discounts[index],
+                                            style: GoogleFonts.workSans(
+                                              fontSize: 11,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   Padding(
                                     padding:
@@ -521,53 +549,40 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Container(
                 color: Colors.white,
-                child: BottomNavigationBar(
-                  currentIndex: _selectedBottomNav,
-                  onTap: (index) {
+                child: BottomNavigationWidget(
+                  selectedIndex: _selectedBottomNav,
+                  onItemTapped: (index) {
                     setState(() {
                       _selectedBottomNav = index;
                     });
+                    // Navigation logic
+                    if (index == 0) {
+                      // Home - already here
+                    } else if (index == 1) {
+                      // Category
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const GroceryScreen(),
+                        ),
+                      );
+                    } else if (index == 2) {
+                      // Cart - placeholder
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Cart screen coming soon')),
+                      );
+                    } else if (index == 3) {
+                      // Orders - placeholder
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Orders screen coming soon')),
+                      );
+                    } else if (index == 4) {
+                      // Profile - placeholder
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Profile screen coming soon')),
+                      );
+                    }
                   },
-                  items: [
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.home_outlined,
-                          color: _selectedBottomNav == 0
-                              ? const Color(0xFF13EC5B)
-                              : Colors.grey),
-                      label: 'Home',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.category_outlined,
-                          color: _selectedBottomNav == 1
-                              ? const Color(0xFF13EC5B)
-                              : Colors.grey),
-                      label: 'Category',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.shopping_cart_outlined,
-                          color: _selectedBottomNav == 2
-                              ? const Color(0xFF13EC5B)
-                              : Colors.grey),
-                      label: 'Cart',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.receipt_long_outlined,
-                          color: _selectedBottomNav == 3
-                              ? const Color(0xFF13EC5B)
-                              : Colors.grey),
-                      label: 'Orders',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.person_outline,
-                          color: _selectedBottomNav == 4
-                              ? const Color(0xFF13EC5B)
-                              : Colors.grey),
-                      label: 'Profile',
-                    ),
-                  ],
-                  selectedItemColor: const Color(0xFF13EC5B),
-                  unselectedItemColor: Colors.grey,
-                  type: BottomNavigationBarType.fixed,
                 ),
               ),
             ],

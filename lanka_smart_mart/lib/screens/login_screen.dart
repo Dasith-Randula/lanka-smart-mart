@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'permission_screen.dart';
 import 'signup_screen.dart';
 
@@ -54,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
       children: [
         Text(
           label,
-          style: const TextStyle(
+          style: GoogleFonts.workSans(
             fontSize: 14,
             fontWeight: FontWeight.w600,
             color: Colors.black87,
@@ -161,10 +162,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 32),
-                const Text(
+                Text(
                   'Welcome Back',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: GoogleFonts.workSans(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
@@ -174,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Text(
                   'Login to start your fresh shopping',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: GoogleFonts.workSans(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: Colors.grey[600],
@@ -199,7 +200,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   alignment: Alignment.centerRight,
                   child: Text(
                     'Forgot password ?',
-                    style: TextStyle(
+                    style: GoogleFonts.workSans(
                       fontSize: 13,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xFF618A70),
@@ -235,19 +236,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     Text(
                       "Don't have an account? ",
-                      style: TextStyle(
+                      style: GoogleFonts.workSans(
                         fontSize: 14,
                         color: Colors.grey[700],
                       ),
                     ),
                     GestureDetector(
                       onTap: _handleSignUp,
-                      child: const Text(
+                      child: Text(
                         'Sign Up',
-                        style: TextStyle(
+                        style: GoogleFonts.workSans(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
-                          color: Color(0xFF13EC5B),
+                          color: const Color(0xFF13EC5B),
                         ),
                       ),
                     ),

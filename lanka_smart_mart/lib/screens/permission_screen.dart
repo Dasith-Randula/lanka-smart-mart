@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'login_screen.dart';
 import 'home_screen.dart';
 
 class PermissionScreen extends StatefulWidget {
@@ -33,7 +34,11 @@ class _PermissionScreenState extends State<PermissionScreen> {
                 Row(
                   children: [
                     GestureDetector(
-                      onTap: () => Navigator.pop(context),
+                      onTap: () => Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ),
+                      ),
                       child: const Icon(Icons.arrow_back, size: 24),
                     ),
                     const SizedBox(width: 12),

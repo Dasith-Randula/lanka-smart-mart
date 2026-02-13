@@ -3,18 +3,18 @@ import 'package:google_fonts/google_fonts.dart';
 import '../widgets/category_button_widget.dart';
 import '../widgets/product_card_widget.dart';
 import '../widgets/bottom_navigation_widget.dart';
-import 'fruits_screen.dart';
+import 'grocery_screen.dart';
 import 'home_screen.dart';
 
-class GroceryScreen extends StatefulWidget {
-  const GroceryScreen({super.key});
+class FruitsScreen extends StatefulWidget {
+  const FruitsScreen({super.key});
 
   @override
-  State<GroceryScreen> createState() => _GroceryScreenState();
+  State<FruitsScreen> createState() => _FruitsScreenState();
 }
 
-class _GroceryScreenState extends State<GroceryScreen> {
-  int _selectedCategory = 0;
+class _FruitsScreenState extends State<FruitsScreen> {
+  int _selectedCategory = 1; // Fruits selected by default
   bool _isSearching = false;
   String _searchQuery = '';
   int _selectedBottomNav = 1;
@@ -28,44 +28,54 @@ class _GroceryScreenState extends State<GroceryScreen> {
     'Bakery',
   ];
 
-  final List<Map<String, String>> allProducts = [
+  final List<Map<String, String>> fruitProducts = [
     {
       'title': 'Organic Mango',
       'quantity': '1 Units',
       'price': 'Rs.120',
     },
     {
-      'title': 'Fresh Broccoli',
+      'title': 'Strawberry',
       'quantity': '500g',
-      'price': 'Rs.200',
+      'price': 'Rs.400',
     },
     {
-      'title': 'Organic Eggs',
-      'quantity': '12 Pieces',
-      'price': 'Rs.240',
+      'title': 'Grapes',
+      'quantity': '100g',
+      'price': 'Rs.140',
     },
     {
-      'title': 'Rice (keeri samba)',
-      'quantity': '5kg',
-      'price': 'Rs.1100',
+      'title': 'Orange',
+      'quantity': '100g',
+      'price': 'Rs.180',
     },
     {
-      'title': 'Fresh Tomatoes',
+      'title': 'Fresh Bananas',
+      'quantity': '1 Bunch',
+      'price': 'Rs.80',
+    },
+    {
+      'title': 'Watermelon',
+      'quantity': '1 kg',
+      'price': 'Rs.250',
+    },
+    {
+      'title': 'Fresh Apples',
+      'quantity': '1 kg',
+      'price': 'Rs.320',
+    },
+    {
+      'title': 'Papaya',
       'quantity': '1 kg',
       'price': 'Rs.150',
-    },
-    {
-      'title': 'Organic Carrots',
-      'quantity': '500g',
-      'price': 'Rs.120',
     },
   ];
 
   List<Map<String, String>> get filteredProducts {
     if (_searchQuery.isEmpty) {
-      return allProducts;
+      return fruitProducts;
     }
-    return allProducts
+    return fruitProducts
         .where((product) =>
             product['title']!
                 .toLowerCase()
@@ -87,13 +97,13 @@ class _GroceryScreenState extends State<GroceryScreen> {
           onTap: () => Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => const HomeScreen(),
+              builder: (context) => const GroceryScreen(),
             ),
           ),
           child: const Icon(Icons.arrow_back, color: Colors.black),
         ),
         title: Text(
-          'Groceries',
+          'Fruits',
           style: GoogleFonts.workSans(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -131,7 +141,7 @@ class _GroceryScreenState extends State<GroceryScreen> {
                 padding: const EdgeInsets.all(16),
                 child: TextField(
                   decoration: InputDecoration(
-                    hintText: 'Search products...',
+                    hintText: 'Search fruits...',
                     hintStyle: TextStyle(color: Colors.grey[400]),
                     prefixIcon: const Icon(Icons.search, color: Colors.grey),
                     suffixIcon: GestureDetector(
@@ -184,7 +194,7 @@ class _GroceryScreenState extends State<GroceryScreen> {
               child: filteredProducts.isEmpty
                   ? Center(
                       child: Text(
-                        'No products found',
+                        'No fruits found',
                         style: GoogleFonts.workSans(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
@@ -204,34 +214,20 @@ class _GroceryScreenState extends State<GroceryScreen> {
                       itemCount: filteredProducts.length,
                       itemBuilder: (context, index) {
                         final product = filteredProducts[index];
-                        return GestureDetector(
-                          onTap: () {
-                            if (product['title'] == 'Organic Mango' &&
-                                _selectedCategory == 1) {
-                              // Navigate to FruitsScreen when clicking on Mango in Fruits category
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const FruitsScreen(),
+                        return ProductCardWidget(
+                          imageUrl: '',
+                          title: product['title']!,
+                          quantity: product['quantity']!,
+                          price: product['price']!,
+                          onAddPressed: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  '${product['title']} added to cart',
                                 ),
-                              );
-                            }
+                              ),
+                            );
                           },
-                          child: ProductCardWidget(
-                            imageUrl: '',
-                            title: product['title']!,
-                            quantity: product['quantity']!,
-                            price: product['price']!,
-                            onAddPressed: () {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    '${product['title']} added to cart',
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
                         );
                       },
                     ),
@@ -254,7 +250,13 @@ class _GroceryScreenState extends State<GroceryScreen> {
               ),
             );
           } else if (index == 1) {
-            // Category - stay on grocery screen
+            // Category
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const GroceryScreen(),
+              ),
+            );
           } else if (index == 2) {
             // Cart
             ScaffoldMessenger.of(context).showSnackBar(
