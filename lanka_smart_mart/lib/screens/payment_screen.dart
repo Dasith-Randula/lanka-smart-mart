@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../models/cart_model.dart';
 import 'order_tracking_screen.dart';
-import 'checkout_screen.dart';
 import '../widgets/bottom_navigation_widget.dart';
 
 class PaymentScreen extends StatefulWidget {
