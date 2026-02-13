@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'grocery_screen.dart';
+import 'cart_screen.dart';
+import '../models/product_model.dart';
+import '../models/cart_model.dart';
+import '../widgets/product_card_widget.dart';
 import '../widgets/bottom_navigation_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,7 +17,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedBranch = 0;
-  //int _selectedCategory = 0;
   int _currentPromoIndex = 0;
   int _selectedBottomNav = 0;
 
@@ -23,6 +27,54 @@ class _HomeScreenState extends State<HomeScreen> {
     {'name': 'Personal Care', 'icon': '💄'},
     {'name': 'Stationery', 'icon': '📝'},
     {'name': 'More', 'icon': '➕'},
+  ];
+
+  // Special offers products
+  final List<ProductModel> specialOffers = [
+    ProductModel(
+      id: '101',
+      name: 'Strawberry Special',
+      unitText: '500g',
+      price: 320,
+      imagePath: '',
+      isOrganic: true,
+    ),
+    ProductModel(
+      id: '102',
+      name: 'Fresh Mango Pack',
+      unitText: '1 kg',
+      price: 240,
+      imagePath: '',
+    ),
+    ProductModel(
+      id: '103',
+      name: 'Organic Broccoli',
+      unitText: '400g',
+      price: 180,
+      imagePath: '',
+      isOrganic: true,
+    ),
+    ProductModel(
+      id: '104',
+      name: 'Fresh Tomatoes',
+      unitText: '1 kg',
+      price: 120,
+      imagePath: '',
+    ),
+    ProductModel(
+      id: '105',
+      name: 'Carrot Bundle',
+      unitText: '800g',
+      price: 100,
+      imagePath: '',
+    ),
+    ProductModel(
+      id: '106',
+      name: 'Orange Juice',
+      unitText: '1 Liter',
+      price: 280,
+      imagePath: '',
+    ),
   ];
 
   @override
@@ -415,129 +467,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                            childAspectRatio: 0.65,
-                            crossAxisSpacing: 35,
-                            mainAxisSpacing: 30,
+                            childAspectRatio: 0.7,
+                            crossAxisSpacing: 12,
+                            mainAxisSpacing: 16,
                           ),
-                          itemCount: 6,
+                          itemCount: specialOffers.length,
                           itemBuilder: (context, index) {
-                            final discounts = ['20% Off', '15% Off', '30% Off', '25% Off', '20% Off', '35% Off'];
-                            return Container(
-                              width: 173,
-                              height: 269,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20),
-                                boxShadow: [
-                                  BoxShadow(
-                                    offset: const Offset(0, 2),
-                                    blurRadius: 6,
-                                    color: Colors.black.withOpacity(0.08),
-                                  ),
-                                ],
-                              ),
-                              child: Column(
-                                children: [
-                                  Stack(
-                                    children: [
-                                      Container(
-                                        width: 142,
-                                        height: 153,
-                                        margin: const EdgeInsets.all(12),
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey[200],
-                                          borderRadius: BorderRadius.circular(12),
-                                        ),
-                                        child: Icon(
-                                          Icons.image,
-                                          size: 48,
-                                          color: Colors.grey[400],
-                                        ),
-                                      ),
-                                      Positioned(
-                                        top: 16,
-                                        left: 16,
-                                        child: Container(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 12,
-                                            vertical: 6,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: const Color(0xFFFF3B30),
-                                            borderRadius: BorderRadius.circular(12),
-                                          ),
-                                          child: Text(
-                                            discounts[index],
-                                            style: GoogleFonts.workSans(
-                                              fontSize: 11,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(horizontal: 8),
-                                    child: Text(
-                                      'Product ${index + 1}',
-                                      style: GoogleFonts.workSans(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(horizontal: 8),
-                                    child: Text(
-                                      '500g',
-                                      style: GoogleFonts.workSans(
-                                        fontSize: 11,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.grey[600],
-                                      ),
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(horizontal: 8),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          '\$${5.99 + index}',
-                                          style: GoogleFonts.workSans(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 32,
-                                          height: 32,
-                                          decoration: BoxDecoration(
-                                            color: const Color(0xFF13EC5B),
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                          child: const Icon(
-                                            Icons.add,
-                                            size: 18,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(height: 12),
-                                ],
-                              ),
+                            final product = specialOffers[index];
+                            return ProductCardWidget(
+                              product: product,
                             );
                           },
                         ),
@@ -567,9 +505,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       );
                     } else if (index == 2) {
-                      // Cart - placeholder
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Cart screen coming soon')),
+                      // Cart
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CartScreen(),
+                        ),
                       );
                     } else if (index == 3) {
                       // Orders - placeholder

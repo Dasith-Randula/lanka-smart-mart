@@ -3,8 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import '../widgets/category_button_widget.dart';
 import '../widgets/product_card_widget.dart';
 import '../widgets/bottom_navigation_widget.dart';
-import 'fruits_screen.dart';
 import 'home_screen.dart';
+import 'cart_screen.dart';
+import '../models/product_model.dart';
 
 class GroceryScreen extends StatefulWidget {
   const GroceryScreen({super.key});
@@ -18,6 +19,7 @@ class _GroceryScreenState extends State<GroceryScreen> {
   bool _isSearching = false;
   String _searchQuery = '';
   int _selectedBottomNav = 1;
+  int? _previousCategory; // Track previous category for animation direction
 
   final List<String> categories = [
     'All Items',
@@ -28,51 +30,132 @@ class _GroceryScreenState extends State<GroceryScreen> {
     'Bakery',
   ];
 
-  final List<Map<String, String>> allProducts = [
-    {
-      'title': 'Organic Mango',
-      'quantity': '1 Units',
-      'price': 'Rs.120',
-    },
-    {
-      'title': 'Fresh Broccoli',
-      'quantity': '500g',
-      'price': 'Rs.200',
-    },
-    {
-      'title': 'Organic Eggs',
-      'quantity': '12 Pieces',
-      'price': 'Rs.240',
-    },
-    {
-      'title': 'Rice (keeri samba)',
-      'quantity': '5kg',
-      'price': 'Rs.1100',
-    },
-    {
-      'title': 'Fresh Tomatoes',
-      'quantity': '1 kg',
-      'price': 'Rs.150',
-    },
-    {
-      'title': 'Organic Carrots',
-      'quantity': '500g',
-      'price': 'Rs.120',
-    },
+  final List<ProductModel> allProducts = [
+    // Fruits
+    ProductModel(
+      id: '1',
+      name: 'Organic Mango',
+      unitText: '1 Units',
+      price: 120,
+      imagePath: '',
+      category: 'Fruits',
+    ),
+    ProductModel(
+      id: '2',
+      name: 'Fresh Broccoli',
+      unitText: '500g',
+      price: 200,
+      imagePath: '',
+      category: 'Vegetables',
+    ),
+    ProductModel(
+      id: '3',
+      name: 'Organic Eggs',
+      unitText: '12 Pieces',
+      price: 240,
+      imagePath: '',
+      category: 'Diary',
+    ),
+    ProductModel(
+      id: '4',
+      name: 'Rice (keeri samba)',
+      unitText: '5kg',
+      price: 1100,
+      imagePath: '',
+      category: 'Beverages',
+    ),
+    ProductModel(
+      id: '5',
+      name: 'Fresh Tomatoes',
+      unitText: '1 kg',
+      price: 150,
+      imagePath: '',
+      category: 'Vegetables',
+    ),
+    ProductModel(
+      id: '6',
+      name: 'Organic Carrots',
+      unitText: '500g',
+      price: 120,
+      imagePath: '',
+      category: 'Vegetables',
+    ),
+    // More Fruits
+    ProductModel(
+      id: '7',
+      name: 'Strawberry',
+      unitText: '500g',
+      price: 400,
+      imagePath: '',
+      category: 'Fruits',
+      isOrganic: true,
+      highFiber: true,
+    ),
+    ProductModel(
+      id: '8',
+      name: 'Grapes',
+      unitText: '100g',
+      price: 140,
+      imagePath: '',
+      category: 'Fruits',
+    ),
+    ProductModel(
+      id: '9',
+      name: 'Orange',
+      unitText: '100g',
+      price: 180,
+      imagePath: '',
+      category: 'Fruits',
+    ),
+    // More vegetables
+    ProductModel(
+      id: '10',
+      name: 'Fresh Spinach',
+      unitText: '250g',
+      price: 80,
+      imagePath: '',
+      category: 'Vegetables',
+    ),
+    // Dairy
+    ProductModel(
+      id: '11',
+      name: 'Fresh Milk',
+      unitText: '1 Liter',
+      price: 95,
+      imagePath: '',
+      category: 'Diary',
+    ),
+    ProductModel(
+      id: '12',
+      name: 'Yogurt',
+      unitText: '500g',
+      price: 80,
+      imagePath: '',
+      category: 'Diary',
+    ),
   ];
 
-  List<Map<String, String>> get filteredProducts {
-    if (_searchQuery.isEmpty) {
-      return allProducts;
+  List<ProductModel> get filteredProducts {
+    List<ProductModel> filtered;
+
+    // Filter by category
+    if (_selectedCategory == 0) {
+      // All Items shows all products
+      filtered = allProducts;
+    } else {
+      filtered = allProducts
+          .where((product) => product.category == categories[_selectedCategory])
+          .toList();
     }
-    return allProducts
+
+    // Filter by search query
+    if (_searchQuery.isEmpty) {
+      return filtered;
+    }
+    return filtered
         .where((product) =>
-            product['title']!
-                .toLowerCase()
-                .contains(_searchQuery.toLowerCase()) ||
-            product['quantity']!
-                .toLowerCase()
-                .contains(_searchQuery.toLowerCase()))
+            product.name.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+            product.unitText.toLowerCase().contains(_searchQuery.toLowerCase()))
         .toList();
   }
 
@@ -171,6 +254,7 @@ class _GroceryScreenState extends State<GroceryScreen> {
                       isSelected: _selectedCategory == index,
                       onPressed: () {
                         setState(() {
+                          _previousCategory = _selectedCategory;
                           _selectedCategory = index;
                         });
                       },
@@ -179,7 +263,7 @@ class _GroceryScreenState extends State<GroceryScreen> {
                 },
               ),
             ),
-            // Products grid
+            // Products grid with animation
             Expanded(
               child: filteredProducts.isEmpty
                   ? Center(
@@ -192,48 +276,45 @@ class _GroceryScreenState extends State<GroceryScreen> {
                         ),
                       ),
                     )
-                  : GridView.builder(
-                      padding: const EdgeInsets.all(16),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.7,
-                        crossAxisSpacing: 12,
-                        mainAxisSpacing: 16,
-                      ),
-                      itemCount: filteredProducts.length,
-                      itemBuilder: (context, index) {
-                        final product = filteredProducts[index];
-                        return GestureDetector(
-                          onTap: () {
-                            if (product['title'] == 'Organic Mango' &&
-                                _selectedCategory == 1) {
-                              // Navigate to FruitsScreen when clicking on Mango in Fruits category
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const FruitsScreen(),
-                                ),
-                              );
-                            }
-                          },
-                          child: ProductCardWidget(
-                            imageUrl: '',
-                            title: product['title']!,
-                            quantity: product['quantity']!,
-                            price: product['price']!,
-                            onAddPressed: () {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    '${product['title']} added to cart',
-                                  ),
-                                ),
-                              );
-                            },
+                  : AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 300),
+                      transitionBuilder: (child, animation) {
+                        // Determine slide direction based on category change
+                        final isMovingRight =
+                            (_previousCategory ?? 0) > _selectedCategory;
+                        final offset = isMovingRight
+                            ? const Offset(1.0, 0)
+                            : const Offset(-1.0, 0);
+
+                        return SlideTransition(
+                          position: Tween<Offset>(
+                            begin: offset,
+                            end: Offset.zero,
+                          ).animate(animation),
+                          child: FadeTransition(
+                            opacity: animation,
+                            child: child,
                           ),
                         );
                       },
+                      child: GridView.builder(
+                        key: ValueKey(_selectedCategory),
+                        padding: const EdgeInsets.all(16),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.7,
+                          crossAxisSpacing: 12,
+                          mainAxisSpacing: 16,
+                        ),
+                        itemCount: filteredProducts.length,
+                        itemBuilder: (context, index) {
+                          final product = filteredProducts[index];
+                          return ProductCardWidget(
+                            product: product,
+                          );
+                        },
+                      ),
                     ),
             ),
           ],
@@ -246,29 +327,15 @@ class _GroceryScreenState extends State<GroceryScreen> {
             _selectedBottomNav = index;
           });
           if (index == 0) {
-            // Home
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(
-                builder: (context) => const HomeScreen(),
-              ),
+              MaterialPageRoute(builder: (context) => const HomeScreen()),
             );
-          } else if (index == 1) {
-            // Category - stay on grocery screen
           } else if (index == 2) {
             // Cart
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Cart screen coming soon')),
-            );
-          } else if (index == 3) {
-            // Orders
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Orders screen coming soon')),
-            );
-          } else if (index == 4) {
-            // Profile
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Profile screen coming soon')),
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const CartScreen()),
             );
           }
         },

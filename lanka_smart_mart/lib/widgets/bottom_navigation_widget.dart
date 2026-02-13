@@ -30,52 +30,29 @@ class BottomNavigationWidget extends StatelessWidget {
         onTap: onItemTapped,
         selectedItemColor: const Color(0xFF13EC5B),
         unselectedItemColor: Colors.grey,
-        items: [
-          _buildNavItem(
-            icon: Icons.home_outlined,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
             label: 'Home',
-            isSelected: selectedIndex == 0,
           ),
-          _buildNavItem(
-            icon: Icons.category_outlined,
+          BottomNavigationBarItem(
+            icon: Icon(Icons.category_outlined),
             label: 'Category',
-            isSelected: selectedIndex == 1,
           ),
-          _buildNavItem(
-            icon: Icons.shopping_cart_outlined,
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart_outlined),
             label: 'Cart',
-            isSelected: selectedIndex == 2,
           ),
-          _buildNavItem(
-            icon: Icons.receipt_outlined,
+          BottomNavigationBarItem(
+            icon: Icon(Icons.receipt_outlined),
             label: 'Orders',
-            isSelected: selectedIndex == 3,
           ),
-          _buildNavItem(
-            icon: Icons.person_outline,
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline),
             label: 'Profile',
-            isSelected: selectedIndex == 4,
           ),
         ],
       ),
-    );
-  }
-
-  BottomNavigationBarItem _buildNavItem({
-    required IconData icon,
-    required String label,
-    required bool isSelected,
-  }) {
-    return BottomNavigationBarItem(
-      icon: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        child: Icon(
-          icon,
-          size: 24,
-          color: isSelected ? const Color(0xFF13EC5B) : Colors.grey,
-        ),
-      ),
-      label: label,
     );
   }
 }

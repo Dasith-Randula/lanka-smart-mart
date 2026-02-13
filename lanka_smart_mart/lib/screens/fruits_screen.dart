@@ -5,6 +5,9 @@ import '../widgets/product_card_widget.dart';
 import '../widgets/bottom_navigation_widget.dart';
 import 'grocery_screen.dart';
 import 'home_screen.dart';
+import 'strawberry_detail_screen.dart';
+import 'cart_screen.dart';
+import '../models/product_model.dart';
 
 class FruitsScreen extends StatefulWidget {
   const FruitsScreen({super.key});
@@ -28,59 +31,77 @@ class _FruitsScreenState extends State<FruitsScreen> {
     'Bakery',
   ];
 
-  final List<Map<String, String>> fruitProducts = [
-    {
-      'title': 'Organic Mango',
-      'quantity': '1 Units',
-      'price': 'Rs.120',
-    },
-    {
-      'title': 'Strawberry',
-      'quantity': '500g',
-      'price': 'Rs.400',
-    },
-    {
-      'title': 'Grapes',
-      'quantity': '100g',
-      'price': 'Rs.140',
-    },
-    {
-      'title': 'Orange',
-      'quantity': '100g',
-      'price': 'Rs.180',
-    },
-    {
-      'title': 'Fresh Bananas',
-      'quantity': '1 Bunch',
-      'price': 'Rs.80',
-    },
-    {
-      'title': 'Watermelon',
-      'quantity': '1 kg',
-      'price': 'Rs.250',
-    },
-    {
-      'title': 'Fresh Apples',
-      'quantity': '1 kg',
-      'price': 'Rs.320',
-    },
-    {
-      'title': 'Papaya',
-      'quantity': '1 kg',
-      'price': 'Rs.150',
-    },
+  final List<ProductModel> fruitProducts = [
+    ProductModel(
+      id: '1',
+      name: 'Organic Mango',
+      unitText: '1 Units',
+      price: 120,
+      imagePath: '',
+    ),
+    ProductModel(
+      id: '2',
+      name: 'Strawberry',
+      unitText: '500g',
+      price: 400,
+      imagePath: '',
+      isOrganic: true,
+      highFiber: true,
+      description:
+          'Fresh Strawberry 🍓\nSweet, juicy, and hand picked for quality. These fresh strawberries are packed with natural flavor and nutrients perfect for snacking, desserts, smoothies or breakfast bowls. Enjoy farm fresh goodness delivered straight to your doorstep.',
+    ),
+    ProductModel(
+      id: '3',
+      name: 'Grapes',
+      unitText: '100g',
+      price: 140,
+      imagePath: '',
+    ),
+    ProductModel(
+      id: '4',
+      name: 'Orange',
+      unitText: '100g',
+      price: 180,
+      imagePath: '',
+    ),
+    ProductModel(
+      id: '5',
+      name: 'Fresh Bananas',
+      unitText: '1 Bunch',
+      price: 80,
+      imagePath: '',
+    ),
+    ProductModel(
+      id: '6',
+      name: 'Watermelon',
+      unitText: '1 kg',
+      price: 250,
+      imagePath: '',
+    ),
+    ProductModel(
+      id: '7',
+      name: 'Fresh Apples',
+      unitText: '1 kg',
+      price: 320,
+      imagePath: '',
+    ),
+    ProductModel(
+      id: '8',
+      name: 'Papaya',
+      unitText: '1 kg',
+      price: 150,
+      imagePath: '',
+    ),
   ];
 
-  List<Map<String, String>> get filteredProducts {
+  List<ProductModel> get filteredProducts {
     if (_searchQuery.isEmpty) {
       return fruitProducts;
     }
     return fruitProducts
         .where((product) =>
-            product['title']!
-                .toLowerCase()
-                .contains(_searchQuery.toLowerCase()) ||
-            product['quantity']!
+            product.name.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+            product.unitText
                 .toLowerCase()
                 .contains(_searchQuery.toLowerCase()))
         .toList();
@@ -180,16 +201,27 @@ class _FruitsScreenState extends State<FruitsScreen> {
                       label: categories[index],
                       isSelected: _selectedCategory == index,
                       onPressed: () {
-                        setState(() {
-                          _selectedCategory = index;
-                        });
+                        // NAVIGATION LOGIC FOR ALL ITEMS
+                        if (index == 0) {
+                          // All Items -> navigate back to Grocery
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const GroceryScreen(),
+                            ),
+                          );
+                        } else {
+                          setState(() {
+                            _selectedCategory = index;
+                          });
+                        }
                       },
                     ),
                   );
                 },
               ),
             ),
-            // Products grid
+            // Products grid with animation
             Expanded(
               child: filteredProducts.isEmpty
                   ? Center(
@@ -202,34 +234,54 @@ class _FruitsScreenState extends State<FruitsScreen> {
                         ),
                       ),
                     )
-                  : GridView.builder(
-                      padding: const EdgeInsets.all(16),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.7,
-                        crossAxisSpacing: 12,
-                        mainAxisSpacing: 16,
-                      ),
-                      itemCount: filteredProducts.length,
-                      itemBuilder: (context, index) {
-                        final product = filteredProducts[index];
-                        return ProductCardWidget(
-                          imageUrl: '',
-                          title: product['title']!,
-                          quantity: product['quantity']!,
-                          price: product['price']!,
-                          onAddPressed: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  '${product['title']} added to cart',
-                                ),
-                              ),
-                            );
-                          },
+                  : AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 300),
+                      transitionBuilder: (child, animation) {
+                        return SlideTransition(
+                          position: Tween<Offset>(
+                            begin: const Offset(1.0, 0),
+                            end: Offset.zero,
+                          ).animate(animation),
+                          child: FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          ),
                         );
                       },
+                      child: GridView.builder(
+                        key: ValueKey(_selectedCategory),
+                        padding: const EdgeInsets.all(16),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.7,
+                          crossAxisSpacing: 12,
+                          mainAxisSpacing: 16,
+                        ),
+                        itemCount: filteredProducts.length,
+                        itemBuilder: (context, index) {
+                          final product = filteredProducts[index];
+                          return GestureDetector(
+                            onTap: () {
+                              // ONLY Strawberry opens detail page
+                              if (product.name == 'Strawberry') {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        StrawberryDetailScreen(
+                                      product: product,
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
+                            child: ProductCardWidget(
+                              product: product,
+                            ),
+                          );
+                        },
+                      ),
                     ),
             ),
           ],
@@ -259,18 +311,11 @@ class _FruitsScreenState extends State<FruitsScreen> {
             );
           } else if (index == 2) {
             // Cart
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Cart screen coming soon')),
-            );
-          } else if (index == 3) {
-            // Orders
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Orders screen coming soon')),
-            );
-          } else if (index == 4) {
-            // Profile
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Profile screen coming soon')),
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const CartScreen(),
+              ),
             );
           }
         },
