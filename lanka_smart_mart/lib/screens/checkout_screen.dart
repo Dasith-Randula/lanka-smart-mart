@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../models/cart_model.dart';
 import 'payment_screen.dart';
 import 'order_tracking_screen.dart';
-import 'cart_screen.dart';
 import '../widgets/bottom_navigation_widget.dart';
 
 class CheckoutScreen extends StatefulWidget {
