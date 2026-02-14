@@ -47,6 +47,10 @@ class BottomNavigationWidget extends StatelessWidget {
             icon: Icon(Icons.receipt_outlined),
             label: 'Orders',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outlined),
+            label: 'Profile',
+          ),
         ],
       ),
     );

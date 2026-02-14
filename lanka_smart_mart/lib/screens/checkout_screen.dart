@@ -9,6 +9,7 @@ import 'home_screen.dart';
 import 'grocery_screen.dart';
 import 'cart_screen.dart';
 import 'select_address_map_screen.dart';
+import 'profile/profile_page.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
@@ -123,6 +124,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             );
           } else if (index == 3) {
             // Orders - already here
+          } else if (index == 4) {
+            // Profile
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ProfilePage(),
+              ),
+            );
           }
         },
       ),

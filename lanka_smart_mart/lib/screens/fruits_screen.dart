@@ -8,6 +8,7 @@ import 'home_screen.dart';
 import 'strawberry_detail_screen.dart';
 import 'cart_screen.dart';
 import 'checkout_screen.dart';
+import 'profile/profile_page.dart';
 import '../models/product_model.dart';
 
 class FruitsScreen extends StatefulWidget {
@@ -324,6 +325,14 @@ class _FruitsScreenState extends State<FruitsScreen> {
               context,
               MaterialPageRoute(
                 builder: (context) => const CheckoutScreen(),
+              ),
+            );
+          } else if (index == 4) {
+            // Profile
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ProfilePage(),
               ),
             );
           }

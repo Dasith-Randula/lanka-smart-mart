@@ -6,6 +6,7 @@ import '../widgets/bottom_navigation_widget.dart';
 import 'home_screen.dart';
 import 'cart_screen.dart';
 import 'checkout_screen.dart';
+import 'profile/profile_page.dart';
 import '../models/product_model.dart';
 
 class GroceryScreen extends StatefulWidget {
@@ -345,6 +346,12 @@ class _GroceryScreenState extends State<GroceryScreen> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => const CheckoutScreen()),
+            );
+          } else if (index == 4) {
+            // Profile
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const ProfilePage()),
             );
           }
         },

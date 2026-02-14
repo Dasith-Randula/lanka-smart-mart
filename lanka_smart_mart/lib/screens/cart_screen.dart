@@ -7,6 +7,7 @@ import 'checkout_screen.dart';
 import 'fruits_screen.dart';
 import 'home_screen.dart';
 import 'grocery_screen.dart';
+import 'profile/profile_page.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -282,6 +283,14 @@ class _CartScreenState extends State<CartScreen> {
               context,
               MaterialPageRoute(
                 builder: (context) => const CheckoutScreen(),
+              ),
+            );
+          } else if (index == 4) {
+            // Profile
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ProfilePage(),
               ),
             );
           }
