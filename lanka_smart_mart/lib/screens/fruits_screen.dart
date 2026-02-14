@@ -7,6 +7,7 @@ import 'grocery_screen.dart';
 import 'home_screen.dart';
 import 'strawberry_detail_screen.dart';
 import 'cart_screen.dart';
+import 'checkout_screen.dart';
 import '../models/product_model.dart';
 
 class FruitsScreen extends StatefulWidget {
@@ -315,6 +316,14 @@ class _FruitsScreenState extends State<FruitsScreen> {
               context,
               MaterialPageRoute(
                 builder: (context) => const CartScreen(),
+              ),
+            );
+          } else if (index == 3) {
+            // Orders
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const CheckoutScreen(),
               ),
             );
           }

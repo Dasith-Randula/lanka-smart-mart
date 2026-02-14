@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'grocery_screen.dart';
 import 'cart_screen.dart';
+import 'checkout_screen.dart';
+import 'strawberry_detail_screen.dart';
 import '../models/product_model.dart';
 import '../widgets/product_card_widget.dart';
 import '../widgets/bottom_navigation_widget.dart';
@@ -474,6 +476,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             final product = specialOffers[index];
                             return ProductCardWidget(
                               product: product,
+                              onProductTap: product.name == 'Strawberry Special'
+                                  ? () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => StrawberryDetailScreen(product: product),
+                                        ),
+                                      )
+                                  : null,
                             );
                           },
                         ),
@@ -511,14 +521,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       );
                     } else if (index == 3) {
-                      // Orders - placeholder
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Orders screen coming soon')),
-                      );
-                    } else if (index == 4) {
-                      // Profile - placeholder
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Profile screen coming soon')),
+                      // Orders
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CheckoutScreen(),
+                        ),
                       );
                     }
                   },

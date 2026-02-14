@@ -5,6 +5,8 @@ import '../models/cart_model.dart';
 import '../widgets/bottom_navigation_widget.dart';
 import 'checkout_screen.dart';
 import 'fruits_screen.dart';
+import 'home_screen.dart';
+import 'grocery_screen.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -255,7 +257,34 @@ class _CartScreenState extends State<CartScreen> {
           setState(() {
             _selectedBottomNav = index;
           });
-          // Navigation logic handled separately
+          // Navigation logic
+          if (index == 0) {
+            // Home
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const HomeScreen(),
+              ),
+            );
+          } else if (index == 1) {
+            // Category
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const GroceryScreen(),
+              ),
+            );
+          } else if (index == 2) {
+            // Cart - already here
+          } else if (index == 3) {
+            // Orders
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const CheckoutScreen(),
+              ),
+            );
+          }
         },
       ),
     );

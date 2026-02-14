@@ -5,6 +5,7 @@ import '../widgets/product_card_widget.dart';
 import '../widgets/bottom_navigation_widget.dart';
 import 'home_screen.dart';
 import 'cart_screen.dart';
+import 'checkout_screen.dart';
 import '../models/product_model.dart';
 
 class GroceryScreen extends StatefulWidget {
@@ -331,11 +332,19 @@ class _GroceryScreenState extends State<GroceryScreen> {
               context,
               MaterialPageRoute(builder: (context) => const HomeScreen()),
             );
+          } else if (index == 1) {
+            // Category - already here
           } else if (index == 2) {
             // Cart
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => const CartScreen()),
+            );
+          } else if (index == 3) {
+            // Orders
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const CheckoutScreen()),
             );
           }
         },

@@ -5,6 +5,10 @@ import '../models/cart_model.dart';
 import 'payment_screen.dart';
 import 'order_tracking_screen.dart';
 import '../widgets/bottom_navigation_widget.dart';
+import 'home_screen.dart';
+import 'grocery_screen.dart';
+import 'cart_screen.dart';
+import 'select_address_map_screen.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
@@ -16,7 +20,8 @@ class CheckoutScreen extends StatefulWidget {
 class _CheckoutScreenState extends State<CheckoutScreen> {
   int _selectedDeliveryType = 0; // 0: Home Delivery, 1: Store Pickup
   int _selectedPaymentMethod = 0; // 0: Cash on Delivery, 1: Card Payment
-  int _selectedBottomNav = 2; // Cart tab
+  int _selectedBottomNav = 3; // Orders tab
+  String _deliveryAddress = 'No.25 , Main Road , Maharagama';
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +96,34 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           setState(() {
             _selectedBottomNav = index;
           });
+          // Navigation logic
+          if (index == 0) {
+            // Home
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const HomeScreen(),
+              ),
+            );
+          } else if (index == 1) {
+            // Category
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const GroceryScreen(),
+              ),
+            );
+          } else if (index == 2) {
+            // Cart
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const CartScreen(),
+              ),
+            );
+          } else if (index == 3) {
+            // Orders - already here
+          }
         },
       ),
     );
@@ -134,7 +167,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'No.25 , Main Road , Maharagama',
+                      _deliveryAddress,
                       style: GoogleFonts.workSans(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
@@ -145,12 +178,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {
-                  // Edit address logic
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Edit address feature coming soon')),
-                  );
-                },
+                onPressed: _showEditAddressDialog,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF13EC5B),
                   shape: RoundedRectangleBorder(
@@ -188,6 +216,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         ),
         const SizedBox(height: 12),
         Container(
+          height: 48,
           decoration: BoxDecoration(
             color: const Color(0xFF13EC5B).withOpacity(0.1),
             border: Border.all(
@@ -196,72 +225,79 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             ),
             borderRadius: BorderRadius.circular(12),
           ),
-          padding: const EdgeInsets.all(8),
-          child: Row(
+          child: Stack(
             children: [
-              // Home Delivery
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _selectedDeliveryType = 0;
-                    });
-                  },
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    decoration: BoxDecoration(
-                      color: _selectedDeliveryType == 0
-                          ? Colors.white
-                          : Colors.transparent,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                    child: Center(
-                      child: Text(
-                        'Home Delivery',
-                        style: GoogleFonts.workSans(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
-                          color: _selectedDeliveryType == 0
-                              ? Colors.black
-                              : const Color(0xFF13EC5B),
-                        ),
+              AnimatedAlign(
+                duration: const Duration(milliseconds: 400),
+                curve: Curves.easeInOut,
+                alignment: _selectedDeliveryType == 0 ? Alignment.centerLeft : Alignment.centerRight,
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.4, // Approximate half minus padding
+                  margin: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 4,
+                        offset: const Offset(0, 2),
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ),
-              // Store Pickup
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _selectedDeliveryType = 1;
-                    });
-                  },
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    decoration: BoxDecoration(
-                      color: _selectedDeliveryType == 1
-                          ? Colors.white
-                          : Colors.transparent,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                    child: Center(
-                      child: Text(
-                        'Store Pickup',
-                        style: GoogleFonts.workSans(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
-                          color: _selectedDeliveryType == 1
-                              ? Colors.black
-                              : const Color(0xFF13EC5B),
+              Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _selectedDeliveryType = 0;
+                        });
+                      },
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          child: Text(
+                            'Home Delivery',
+                            style: GoogleFonts.workSans(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                              color: _selectedDeliveryType == 0
+                                  ? Colors.black
+                                  : const Color(0xFF13EC5B),
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _selectedDeliveryType = 1;
+                        });
+                      },
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          child: Text(
+                            'Store Pickup',
+                            style: GoogleFonts.workSans(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                              color: _selectedDeliveryType == 1
+                                  ? Colors.black
+                                  : const Color(0xFF13EC5B),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -653,6 +689,167 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  void _showEditAddressDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Edit Delivery Address',
+                  style: GoogleFonts.workSans(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton.icon(
+                  onPressed: () async {
+                    Navigator.pop(context);
+                    final result = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SelectAddressMapScreen(),
+                      ),
+                    );
+                    if (result != null && result is String) {
+                      setState(() {
+                        _deliveryAddress = result;
+                      });
+                    }
+                  },
+                  icon: const Icon(Icons.map, color: Colors.white),
+                  label: Text(
+                    'Select from Map',
+                    style: GoogleFonts.workSans(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF13EC5B),
+                    minimumSize: const Size(double.infinity, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    _showManualAddressDialog();
+                  },
+                  icon: const Icon(Icons.edit, color: Colors.white),
+                  label: Text(
+                    'Enter Manually',
+                    style: GoogleFonts.workSans(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.grey[600],
+                    minimumSize: const Size(double.infinity, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _showManualAddressDialog() {
+    final TextEditingController addressController = TextEditingController(text: _deliveryAddress);
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Enter Address',
+                  style: GoogleFonts.workSans(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                TextFormField(
+                  controller: addressController,
+                  maxLines: 3,
+                  decoration: InputDecoration(
+                    hintText: 'Enter your delivery address',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  style: GoogleFonts.workSans(),
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text(
+                          'Cancel',
+                          style: GoogleFonts.workSans(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (addressController.text.trim().isNotEmpty) {
+                            setState(() {
+                              _deliveryAddress = addressController.text.trim();
+                            });
+                            Navigator.pop(context);
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF13EC5B),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: Text(
+                          'Save',
+                          style: GoogleFonts.workSans(
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

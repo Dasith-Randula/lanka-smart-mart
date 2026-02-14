@@ -4,6 +4,11 @@ import 'package:provider/provider.dart';
 import '../models/cart_model.dart';
 import 'order_tracking_screen.dart';
 import '../widgets/bottom_navigation_widget.dart';
+import 'home_screen.dart';
+import 'grocery_screen.dart';
+import 'cart_screen.dart';
+import 'checkout_screen.dart';
+import 'select_address_map_screen.dart';
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({super.key});
@@ -14,7 +19,8 @@ class PaymentScreen extends StatefulWidget {
 
 class _PaymentScreenState extends State<PaymentScreen> {
   int _selectedCard = 0; // 0: Visa, 1: MasterCard
-  int _selectedBottomNav = 2; // Cart tab
+  int _selectedBottomNav = 3; // Orders tab
+  String _deliveryAddress = 'No.25 , Main Road , Maharagama';
 
   @override
   Widget build(BuildContext context) {
@@ -85,6 +91,40 @@ class _PaymentScreenState extends State<PaymentScreen> {
           setState(() {
             _selectedBottomNav = index;
           });
+          // Navigation logic
+          if (index == 0) {
+            // Home
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const HomeScreen(),
+              ),
+            );
+          } else if (index == 1) {
+            // Category
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const GroceryScreen(),
+              ),
+            );
+          } else if (index == 2) {
+            // Cart
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const CartScreen(),
+              ),
+            );
+          } else if (index == 3) {
+            // Orders
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const CheckoutScreen(),
+              ),
+            );
+          }
         },
       ),
     );
@@ -128,7 +168,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'No.25 , Main Road , Maharagama',
+                      _deliveryAddress,
                       style: GoogleFonts.workSans(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
@@ -139,11 +179,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Edit address feature coming soon')),
-                  );
-                },
+                onPressed: _showEditAddressDialog,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF13EC5B),
                   shape: RoundedRectangleBorder(
@@ -589,6 +625,167 @@ class _PaymentScreenState extends State<PaymentScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  void _showEditAddressDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Edit Delivery Address',
+                  style: GoogleFonts.workSans(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton.icon(
+                  onPressed: () async {
+                    Navigator.pop(context);
+                    final result = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SelectAddressMapScreen(),
+                      ),
+                    );
+                    if (result != null && result is String) {
+                      setState(() {
+                        _deliveryAddress = result;
+                      });
+                    }
+                  },
+                  icon: const Icon(Icons.map, color: Colors.white),
+                  label: Text(
+                    'Select from Map',
+                    style: GoogleFonts.workSans(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF13EC5B),
+                    minimumSize: const Size(double.infinity, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    _showManualAddressDialog();
+                  },
+                  icon: const Icon(Icons.edit, color: Colors.white),
+                  label: Text(
+                    'Enter Manually',
+                    style: GoogleFonts.workSans(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.grey[600],
+                    minimumSize: const Size(double.infinity, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _showManualAddressDialog() {
+    final TextEditingController addressController = TextEditingController(text: _deliveryAddress);
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Enter Address',
+                  style: GoogleFonts.workSans(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                TextFormField(
+                  controller: addressController,
+                  maxLines: 3,
+                  decoration: InputDecoration(
+                    hintText: 'Enter your delivery address',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  style: GoogleFonts.workSans(),
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text(
+                          'Cancel',
+                          style: GoogleFonts.workSans(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (addressController.text.trim().isNotEmpty) {
+                            setState(() {
+                              _deliveryAddress = addressController.text.trim();
+                            });
+                            Navigator.pop(context);
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF13EC5B),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: Text(
+                          'Save',
+                          style: GoogleFonts.workSans(
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
