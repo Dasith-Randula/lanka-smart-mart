@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../widgets/bottom_navigation_widget.dart';
+import '../home_screen.dart';
+import '../grocery_screen.dart';
+import '../cart_screen.dart';
+import '../checkout_screen.dart';
+import 'profile_page.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -56,10 +62,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: Colors.grey[300]!,
-                      width: 1,
-                    ),
+                    border: Border.all(color: Colors.grey[300]!, width: 1),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.04),
@@ -124,11 +127,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                         ),
                       ),
-                      Divider(
-                        height: 1,
-                        color: Colors.grey[200],
-                        indent: 56,
-                      ),
+                      Divider(height: 1, color: Colors.grey[200], indent: 56),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                           vertical: 16,
@@ -144,8 +143,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             const SizedBox(width: 16),
                             Expanded(
                               child: Column(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     'Dark Mode',
@@ -170,11 +168,9 @@ class _SettingsPageState extends State<SettingsPage> {
                             Switch(
                               value: _darkModeEnabled,
                               onChanged: (value) {
-                                setState(
-                                    () => _darkModeEnabled = value);
+                                setState(() => _darkModeEnabled = value);
                               },
-                              activeColor:
-                                  const Color(0xFF13EC5B),
+                              activeColor: const Color(0xFF13EC5B),
                             ),
                           ],
                         ),
@@ -196,10 +192,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: Colors.grey[300]!,
-                      width: 1,
-                    ),
+                    border: Border.all(color: Colors.grey[300]!, width: 1),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.04),
@@ -264,11 +257,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                         ),
                       ),
-                      Divider(
-                        height: 1,
-                        color: Colors.grey[200],
-                        indent: 56,
-                      ),
+                      Divider(height: 1, color: Colors.grey[200], indent: 56),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                           vertical: 16,
@@ -284,8 +273,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             const SizedBox(width: 16),
                             Expanded(
                               child: Column(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     'Account Privacy',
@@ -310,11 +298,9 @@ class _SettingsPageState extends State<SettingsPage> {
                             Switch(
                               value: _privacyEnabled,
                               onChanged: (value) {
-                                setState(
-                                    () => _privacyEnabled = value);
+                                setState(() => _privacyEnabled = value);
                               },
-                              activeColor:
-                                  const Color(0xFF13EC5B),
+                              activeColor: const Color(0xFF13EC5B),
                             ),
                           ],
                         ),
@@ -327,6 +313,34 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ),
         ),
+      ),
+      bottomNavigationBar: BottomNavigationWidget(
+        selectedIndex: 4,
+        onItemTapped: (index) {
+          if (index == 0) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const HomePage()),
+            );
+          } else if (index == 1) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const GroceriesPage()),
+            );
+          } else if (index == 2) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const CartPage()),
+            );
+          } else if (index == 3) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const CheckoutPage()),
+            );
+          } else if (index == 4) {
+            Navigator.pop(context);
+          }
+        },
       ),
     );
   }
@@ -460,6 +474,12 @@ class _SettingsPageState extends State<SettingsPage> {
             }).toList(),
           ),
         ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+        ],
       ),
     );
   }

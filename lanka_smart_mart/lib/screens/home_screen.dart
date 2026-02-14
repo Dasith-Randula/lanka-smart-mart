@@ -8,14 +8,14 @@ import '../models/product_model.dart';
 import '../widgets/product_card_widget.dart';
 import '../widgets/bottom_navigation_widget.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomePageState extends State<HomePage> {
   int _selectedBranch = 0;
   int _currentPromoIndex = 0;
   int _selectedBottomNav = 0;
@@ -323,7 +323,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                const GroceryScreen(),
+                                                const GroceriesPage(),
                                           ),
                                         )
                                     : null,
@@ -501,7 +501,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const GroceryScreen(),
+                          builder: (context) => const GroceriesPage(),
                         ),
                       );
                     } else if (index == 2) {
@@ -509,7 +509,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const CartScreen(),
+                          builder: (context) => const CartPage(),
                         ),
                       );
                     } else if (index == 3) {
@@ -517,7 +517,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const CheckoutScreen(),
+                          builder: (context) => const CheckoutPage(),
                         ),
                       );
                     } else if (index == 4) {

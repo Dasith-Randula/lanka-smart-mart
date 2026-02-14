@@ -5,19 +5,19 @@ import '../models/product_model.dart';
 import '../models/cart_model.dart';
 import 'cart_screen.dart';
 
-class StrawberryDetailScreen extends StatefulWidget {
+class StrawberryDetailsPage extends StatefulWidget {
   final ProductModel product;
 
-  const StrawberryDetailScreen({
+  const StrawberryDetailsPage({
     super.key,
     required this.product,
   });
 
   @override
-  State<StrawberryDetailScreen> createState() => _StrawberryDetailScreenState();
+  State<StrawberryDetailsPage> createState() => _StrawberryDetailsPageState();
 }
 
-class _StrawberryDetailScreenState extends State<StrawberryDetailScreen> {
+class _StrawberryDetailsPageState extends State<StrawberryDetailsPage> {
   int _quantity = 0;
 
   void _incrementQuantity() {
@@ -63,7 +63,7 @@ class _StrawberryDetailScreenState extends State<StrawberryDetailScreen> {
     // Navigate to cart
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => const CartScreen()),
+      MaterialPageRoute(builder: (context) => const CartPage()),
     );
   }
 

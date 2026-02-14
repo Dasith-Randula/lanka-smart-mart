@@ -120,7 +120,7 @@ class _FruitsScreenState extends State<FruitsScreen> {
           onTap: () => Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => const GroceryScreen(),
+              builder: (context) => const GroceriesPage(),
             ),
           ),
           child: const Icon(Icons.arrow_back, color: Colors.black),
@@ -209,7 +209,7 @@ class _FruitsScreenState extends State<FruitsScreen> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const GroceryScreen(),
+                              builder: (context) => const GroceriesPage(),
                             ),
                           );
                         } else {
@@ -263,25 +263,25 @@ class _FruitsScreenState extends State<FruitsScreen> {
                         itemCount: filteredProducts.length,
                         itemBuilder: (context, index) {
                           final product = filteredProducts[index];
-                          return GestureDetector(
-                            onTap: () {
-                              // ONLY Strawberry opens detail page
-                              if (product.name == 'Strawberry') {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        StrawberryDetailScreen(
-                                      product: product,
-                                    ),
+                          return product.name == 'Strawberry'
+                              ? GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => StrawberryDetailsPage(
+                                          product: product,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: ProductCardWidget(
+                                    product: product,
                                   ),
+                                )
+                              : ProductCardWidget(
+                                  product: product,
                                 );
-                              }
-                            },
-                            child: ProductCardWidget(
-                              product: product,
-                            ),
-                          );
                         },
                       ),
                     ),
@@ -300,7 +300,7 @@ class _FruitsScreenState extends State<FruitsScreen> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const HomeScreen(),
+                builder: (context) => const HomePage(),
               ),
             );
           } else if (index == 1) {
@@ -308,7 +308,7 @@ class _FruitsScreenState extends State<FruitsScreen> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const GroceryScreen(),
+                builder: (context) => const GroceriesPage(),
               ),
             );
           } else if (index == 2) {
@@ -316,7 +316,7 @@ class _FruitsScreenState extends State<FruitsScreen> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const CartScreen(),
+                builder: (context) => const CartPage(),
               ),
             );
           } else if (index == 3) {
@@ -324,7 +324,7 @@ class _FruitsScreenState extends State<FruitsScreen> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const CheckoutScreen(),
+                builder: (context) => const CheckoutPage(),
               ),
             );
           } else if (index == 4) {

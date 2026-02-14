@@ -97,7 +97,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const HomeScreen(),
+                builder: (context) => const HomePage(),
               ),
             );
           } else if (index == 1) {
@@ -105,7 +105,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const GroceryScreen(),
+                builder: (context) => const GroceriesPage(),
               ),
             );
           } else if (index == 2) {
@@ -113,7 +113,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const CartScreen(),
+                builder: (context) => const CartPage(),
               ),
             );
           } else if (index == 3) {
@@ -121,7 +121,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const CheckoutScreen(),
+                builder: (context) => const CheckoutPage(),
               ),
             );
           }

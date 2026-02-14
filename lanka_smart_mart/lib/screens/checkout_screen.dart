@@ -11,14 +11,14 @@ import 'cart_screen.dart';
 import 'select_address_map_screen.dart';
 import 'profile/profile_page.dart';
 
-class CheckoutScreen extends StatefulWidget {
-  const CheckoutScreen({super.key});
+class CheckoutPage extends StatefulWidget {
+  const CheckoutPage({super.key});
 
   @override
-  State<CheckoutScreen> createState() => _CheckoutScreenState();
+  State<CheckoutPage> createState() => _CheckoutPageState();
 }
 
-class _CheckoutScreenState extends State<CheckoutScreen> {
+class _CheckoutPageState extends State<CheckoutPage> {
   int _selectedDeliveryType = 0; // 0: Home Delivery, 1: Store Pickup
   int _selectedPaymentMethod = 0; // 0: Cash on Delivery, 1: Card Payment
   int _selectedBottomNav = 3; // Orders tab
@@ -103,7 +103,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const HomeScreen(),
+                builder: (context) => const HomePage(),
               ),
             );
           } else if (index == 1) {
@@ -111,7 +111,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const GroceryScreen(),
+                builder: (context) => const GroceriesPage(),
               ),
             );
           } else if (index == 2) {
@@ -119,7 +119,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const CartScreen(),
+                builder: (context) => const CartPage(),
               ),
             );
           } else if (index == 3) {

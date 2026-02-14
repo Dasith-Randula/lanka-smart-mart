@@ -123,7 +123,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                   child: ElevatedButton(
                     onPressed: () => Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => const HomeScreen()),
+                      MaterialPageRoute(builder: (context) => const HomePage()),
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF13EC5B),
@@ -157,25 +157,25 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
           if (index == 0) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
+              MaterialPageRoute(builder: (context) => const HomePage()),
             );
           } else if (index == 1) {
             // Category
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const GroceryScreen()),
+              MaterialPageRoute(builder: (context) => const GroceriesPage()),
             );
           } else if (index == 2) {
             // Cart
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const CartScreen()),
+              MaterialPageRoute(builder: (context) => const CartPage()),
             );
           } else if (index == 3) {
             // Orders
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const CheckoutScreen()),
+              MaterialPageRoute(builder: (context) => const CheckoutPage()),
             );
           }
         },

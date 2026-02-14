@@ -9,14 +9,14 @@ import 'home_screen.dart';
 import 'grocery_screen.dart';
 import 'profile/profile_page.dart';
 
-class CartScreen extends StatefulWidget {
-  const CartScreen({super.key});
+class CartPage extends StatefulWidget {
+  const CartPage({super.key});
 
   @override
-  State<CartScreen> createState() => _CartScreenState();
+  State<CartPage> createState() => _CartPageState();
 }
 
-class _CartScreenState extends State<CartScreen> {
+class _CartPageState extends State<CartPage> {
   int _selectedBottomNav = 2; // Cart tab
 
   void _showClearConfirmation() {
@@ -226,7 +226,7 @@ class _CartScreenState extends State<CartScreen> {
                             onPressed: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const CheckoutScreen(),
+                                builder: (context) => const CheckoutPage(),
                               ),
                             ),
                             style: ElevatedButton.styleFrom(
@@ -264,7 +264,7 @@ class _CartScreenState extends State<CartScreen> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const HomeScreen(),
+                builder: (context) => const HomePage(),
               ),
             );
           } else if (index == 1) {
@@ -272,7 +272,7 @@ class _CartScreenState extends State<CartScreen> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const GroceryScreen(),
+                builder: (context) => const GroceriesPage(),
               ),
             );
           } else if (index == 2) {
@@ -282,7 +282,7 @@ class _CartScreenState extends State<CartScreen> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const CheckoutScreen(),
+                builder: (context) => const CheckoutPage(),
               ),
             );
           } else if (index == 4) {

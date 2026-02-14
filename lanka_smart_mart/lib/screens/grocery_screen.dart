@@ -9,14 +9,14 @@ import 'checkout_screen.dart';
 import 'profile/profile_page.dart';
 import '../models/product_model.dart';
 
-class GroceryScreen extends StatefulWidget {
-  const GroceryScreen({super.key});
+class GroceriesPage extends StatefulWidget {
+  const GroceriesPage({super.key});
 
   @override
-  State<GroceryScreen> createState() => _GroceryScreenState();
+  State<GroceriesPage> createState() => _GroceriesPageState();
 }
 
-class _GroceryScreenState extends State<GroceryScreen> {
+class _GroceriesPageState extends State<GroceriesPage> {
   int _selectedCategory = 0;
   bool _isSearching = false;
   String _searchQuery = '';
@@ -172,7 +172,7 @@ class _GroceryScreenState extends State<GroceryScreen> {
           onTap: () => Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => const HomeScreen(),
+              builder: (context) => const HomePage(),
             ),
           ),
           child: const Icon(Icons.arrow_back, color: Colors.black),
@@ -331,7 +331,7 @@ class _GroceryScreenState extends State<GroceryScreen> {
           if (index == 0) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
+              MaterialPageRoute(builder: (context) => const HomePage()),
             );
           } else if (index == 1) {
             // Category - already here
@@ -339,13 +339,13 @@ class _GroceryScreenState extends State<GroceryScreen> {
             // Cart
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const CartScreen()),
+              MaterialPageRoute(builder: (context) => const CartPage()),
             );
           } else if (index == 3) {
             // Orders
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const CheckoutScreen()),
+              MaterialPageRoute(builder: (context) => const CheckoutPage()),
             );
           } else if (index == 4) {
             // Profile
