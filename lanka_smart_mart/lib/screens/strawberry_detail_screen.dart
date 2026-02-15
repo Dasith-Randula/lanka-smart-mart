@@ -241,7 +241,7 @@ class _StrawberryDetailsPageState extends State<StrawberryDetailsPage> {
 
                 // Description
                 Text(
-                  widget.product.description ?? 'Fresh Strawberry 🍓\nSweet, juicy, and hand picked for quality. These fresh strawberries are packed with natural flavor and nutrients perfect for snacking, desserts, smoothies or breakfast bowls. Enjoy farm fresh goodness delivered straight to your doorstep.',
+                  widget.product.description,
                   style: GoogleFonts.workSans(
                     fontSize: 13,
                     fontWeight: FontWeight.w400,
