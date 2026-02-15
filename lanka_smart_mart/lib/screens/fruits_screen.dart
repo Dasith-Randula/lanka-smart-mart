@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../widgets/category_button_widget.dart';
 import '../widgets/product_card_widget.dart';
 import '../widgets/bottom_navigation_widget.dart';
@@ -10,6 +11,7 @@ import 'cart_screen.dart';
 import 'checkout_screen.dart';
 import 'profile/profile_page.dart';
 import '../models/product_model.dart';
+import '../models/theme_provider.dart';
 
 class FruitsScreen extends StatefulWidget {
   const FruitsScreen({super.key});
@@ -33,74 +35,50 @@ class _FruitsScreenState extends State<FruitsScreen> {
     'Bakery',
   ];
 
-  final List<ProductModel> fruitProducts = [
+  final List<ProductModel> fruitsProducts = [
     ProductModel(
       id: '1',
       name: 'Organic Mango',
-      unitText: '1 Units',
-      price: 120,
+      unitText: '1 Unit',
+      price: 120.0,
+      description: 'Fresh organic mango picked from local farms.',
       imagePath: '',
-    ),
-    ProductModel(
-      id: '2',
-      name: 'Strawberry',
-      unitText: '500g',
-      price: 400,
-      imagePath: '',
-      isOrganic: true,
-      highFiber: true,
-      description:
-          'Fresh Strawberry 🍓\nSweet, juicy, and hand picked for quality. These fresh strawberries are packed with natural flavor and nutrients perfect for snacking, desserts, smoothies or breakfast bowls. Enjoy farm fresh goodness delivered straight to your doorstep.',
-    ),
-    ProductModel(
-      id: '3',
-      name: 'Grapes',
-      unitText: '100g',
-      price: 140,
-      imagePath: '',
-    ),
-    ProductModel(
-      id: '4',
-      name: 'Orange',
-      unitText: '100g',
-      price: 180,
-      imagePath: '',
-    ),
-    ProductModel(
-      id: '5',
-      name: 'Fresh Bananas',
-      unitText: '1 Bunch',
-      price: 80,
-      imagePath: '',
-    ),
-    ProductModel(
-      id: '6',
-      name: 'Watermelon',
-      unitText: '1 kg',
-      price: 250,
-      imagePath: '',
+      category: 'Fruits',
     ),
     ProductModel(
       id: '7',
-      name: 'Fresh Apples',
-      unitText: '1 kg',
-      price: 320,
+      name: 'Strawberry',
+      unitText: '500g',
+      price: 400.0,
+      description: 'Sweet and fresh strawberries.',
       imagePath: '',
+      category: 'Fruits',
     ),
     ProductModel(
       id: '8',
-      name: 'Papaya',
-      unitText: '1 kg',
-      price: 150,
+      name: 'Grapes',
+      unitText: '100g',
+      price: 140.0,
+      description: 'Seedless grapes, perfect for snacking.',
       imagePath: '',
+      category: 'Fruits',
+    ),
+    ProductModel(
+      id: '9',
+      name: 'Orange',
+      unitText: '100g',
+      price: 180.0,
+      description: 'Juicy oranges full of vitamin C.',
+      imagePath: '',
+      category: 'Fruits',
     ),
   ];
 
   List<ProductModel> get filteredProducts {
     if (_searchQuery.isEmpty) {
-      return fruitProducts;
+      return fruitsProducts;
     }
-    return fruitProducts
+    return fruitsProducts
         .where((product) =>
             product.name.toLowerCase().contains(_searchQuery.toLowerCase()) ||
             product.unitText
@@ -111,10 +89,12 @@ class _FruitsScreenState extends State<FruitsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = context.watch<ThemeProvider>().isDarkMode;
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: isDarkMode ? const Color(0xFF030303) : Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: isDarkMode ? const Color(0xFF111813) : Colors.white,
         elevation: 0,
         leading: GestureDetector(
           onTap: () => Navigator.pushReplacement(
@@ -123,14 +103,14 @@ class _FruitsScreenState extends State<FruitsScreen> {
               builder: (context) => const GroceriesPage(),
             ),
           ),
-          child: const Icon(Icons.arrow_back, color: Colors.black),
+          child: Icon(Icons.arrow_back, color: isDarkMode ? Colors.white : Colors.black),
         ),
         title: Text(
           'Fruits',
           style: GoogleFonts.workSans(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Colors.black,
+            color: isDarkMode ? Colors.white : Colors.black,
           ),
         ),
         centerTitle: true,
@@ -264,8 +244,9 @@ class _FruitsScreenState extends State<FruitsScreen> {
                         itemBuilder: (context, index) {
                           final product = filteredProducts[index];
                           return product.name == 'Strawberry'
-                              ? GestureDetector(
+                              ? InkWell(
                                   onTap: () {
+                                    print("Strawberry clicked");
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(

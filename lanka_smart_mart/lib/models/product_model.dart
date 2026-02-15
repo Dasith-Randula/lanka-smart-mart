@@ -2,24 +2,18 @@ class ProductModel {
   final String id;
   final String name;
   final String unitText;
-  final int price;
-  final String imagePath;
-  final bool isOrganic;
-  final bool inStock;
-  final bool highFiber;
-  final String? description;
-  final String? category; // For categorizing products (Fruits, Vegetables, etc.)
+  final double price;
+  final String description;
+  final String? imagePath;
+  final String? category;
 
   ProductModel({
     required this.id,
     required this.name,
     required this.unitText,
     required this.price,
-    required this.imagePath,
-    this.isOrganic = false,
-    this.inStock = true,
-    this.highFiber = false,
-    this.description,
+    required this.description,
+    this.imagePath,
     this.category,
   });
 }
@@ -33,5 +27,5 @@ class CartItemModel {
     required this.quantity,
   });
 
-  int get totalPrice => product.price * quantity;
+  double get totalPrice => product.price * quantity;
 }

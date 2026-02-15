@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../../widgets/bottom_navigation_widget.dart';
+import '../../models/theme_provider.dart';
 import '../home_screen.dart';
 import '../grocery_screen.dart';
 import '../cart_screen.dart';
@@ -15,29 +17,85 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  bool _darkModeEnabled = false;
   String _selectedLanguage = 'English';
   bool _privacyEnabled = true;
+  int _selectedBottomNav = 4;
 
   final List<String> languages = ['English', 'Spanish', 'French', 'German'];
 
+  void _handleNavigation(int index) {
+    if (index == _selectedBottomNav) return;
+
+    setState(() {
+      _selectedBottomNav = index;
+    });
+
+    switch (index) {
+      case 0:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomePage(),
+          ),
+        );
+        break;
+      case 1:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const GroceriesPage(),
+          ),
+        );
+        break;
+      case 2:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const CartPage(),
+          ),
+        );
+        break;
+      case 3:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const CheckoutPage(),
+          ),
+        );
+        break;
+      case 4:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const ProfilePage(),
+          ),
+        );
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = context.watch<ThemeProvider>().isDarkMode;
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: isDarkMode ? const Color(0xFF030303) : Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: isDarkMode ? const Color(0xFF111813) : Colors.white,
         elevation: 0,
         leading: GestureDetector(
           onTap: () => Navigator.pop(context),
-          child: const Icon(Icons.arrow_back, color: Colors.black),
+          child: Icon(
+            Icons.arrow_back,
+            color: isDarkMode ? Colors.white : Colors.black,
+          ),
         ),
         title: Text(
           'Settings',
           style: GoogleFonts.workSans(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Colors.black,
+            color: isDarkMode ? Colors.white : Colors.black,
           ),
         ),
         centerTitle: true,
@@ -54,13 +112,13 @@ class _SettingsPageState extends State<SettingsPage> {
                   style: GoogleFonts.workSans(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    color: isDarkMode ? Colors.white : Colors.black,
                   ),
                 ),
                 const SizedBox(height: 12),
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: isDarkMode ? const Color(0xFF1A1A1A) : Colors.white,
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(color: Colors.grey[300]!, width: 1),
                     boxShadow: [
@@ -166,9 +224,9 @@ class _SettingsPageState extends State<SettingsPage> {
                               ),
                             ),
                             Switch(
-                              value: _darkModeEnabled,
+                              value: context.watch<ThemeProvider>().isDarkMode,
                               onChanged: (value) {
-                                setState(() => _darkModeEnabled = value);
+                                context.read<ThemeProvider>().setTheme(value);
                               },
                               activeColor: const Color(0xFF13EC5B),
                             ),
@@ -184,13 +242,13 @@ class _SettingsPageState extends State<SettingsPage> {
                   style: GoogleFonts.workSans(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    color: isDarkMode ? Colors.white : Colors.black,
                   ),
                 ),
                 const SizedBox(height: 12),
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: isDarkMode ? const Color(0xFF1A1A1A) : Colors.white,
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(color: Colors.grey[300]!, width: 1),
                     boxShadow: [
@@ -315,32 +373,8 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationWidget(
-        selectedIndex: 4,
-        onItemTapped: (index) {
-          if (index == 0) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (_) => const HomePage()),
-            );
-          } else if (index == 1) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (_) => const GroceriesPage()),
-            );
-          } else if (index == 2) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (_) => const CartPage()),
-            );
-          } else if (index == 3) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (_) => const CheckoutPage()),
-            );
-          } else if (index == 4) {
-            Navigator.pop(context);
-          }
-        },
+        selectedIndex: _selectedBottomNav,
+        onItemTapped: _handleNavigation,
       ),
     );
   }

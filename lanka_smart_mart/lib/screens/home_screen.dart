@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'grocery_screen.dart';
 import 'cart_screen.dart';
 import 'checkout_screen.dart';
 import 'profile/profile_page.dart';
 import '../models/product_model.dart';
+import '../models/theme_provider.dart';
 import '../widgets/product_card_widget.dart';
 import '../widgets/bottom_navigation_widget.dart';
 
@@ -34,58 +36,95 @@ class _HomePageState extends State<HomePage> {
     ProductModel(
       id: '101',
       name: 'Strawberry Special',
+      category: 'Fruits',
       unitText: '500g',
-      price: 320,
+      price: 320.0,
+      description: 'Crisp and juicy fresh apples.',
       imagePath: '',
-      isOrganic: true,
     ),
     ProductModel(
       id: '102',
       name: 'Fresh Mango Pack',
+      category: 'Fruits',
       unitText: '1 kg',
-      price: 240,
+      price: 240.0,
+      description: 'Crisp and juicy fresh apples.',
       imagePath: '',
     ),
     ProductModel(
       id: '103',
       name: 'Organic Broccoli',
       unitText: '400g',
-      price: 180,
+      price: 180.0,
+      description: 'Fresh organic broccoli rich in nutrients.',
       imagePath: '',
-      isOrganic: true,
+      category: 'Vegetables',
     ),
     ProductModel(
       id: '104',
-      name: 'Fresh Tomatoes',
+      name: 'Fresh Apples',
       unitText: '1 kg',
-      price: 120,
+      price: 250.0,
+      description: 'Crisp and juicy fresh apples.',
       imagePath: '',
+      category: 'Fruits',
     ),
     ProductModel(
       id: '105',
       name: 'Carrot Bundle',
+      category: 'Vegetables',
       unitText: '800g',
-      price: 100,
+      price: 100.0,
+      description: 'Crisp and juicy fresh apples.',
       imagePath: '',
     ),
     ProductModel(
       id: '106',
       name: 'Orange Juice',
+      category: 'Beverages',
       unitText: '1 Liter',
-      price: 280,
+      price: 280.0,
+      description: 'Crisp and juicy fresh apples.',
       imagePath: '',
     ),
   ];
 
+  // Home products list
+  final List<ProductModel> homeProducts = [
+    ProductModel(
+      id: '1',
+      name: 'Organic Mango',
+      unitText: '1 Unit',
+      price: 120.0,
+      description: 'Fresh organic mango picked from local farms.',
+      imagePath: '',
+      category: 'Fruits',
+    ),
+    ProductModel(
+      id: '2',
+      name: 'Fresh Broccoli',
+      unitText: '500g',
+      price: 200.0,
+      description: 'Crisp and fresh broccoli.',
+      imagePath: '',
+      category: 'Vegetables',
+    ),
+    // Add more as per actual list
+  ];
+
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = context.watch<ThemeProvider>().isDarkMode;
+
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFFD2E6DA), Colors.white],
+            colors: isDarkMode
+                ? [const Color(0xFF094820), const Color(0xFF030303)]
+                : [const Color(0xFFD2E6DA), Colors.white],
           ),
         ),
         child: SafeArea(

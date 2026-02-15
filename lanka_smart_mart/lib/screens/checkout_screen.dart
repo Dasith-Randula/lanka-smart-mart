@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../models/cart_model.dart';
+import '../models/theme_provider.dart';
 import 'payment_screen.dart';
 import 'order_tracking_screen.dart';
 import '../widgets/bottom_navigation_widget.dart';
@@ -27,22 +28,23 @@ class _CheckoutPageState extends State<CheckoutPage> {
   @override
   Widget build(BuildContext context) {
     final cartModel = context.watch<CartModel>();
+    final isDarkMode = context.watch<ThemeProvider>().isDarkMode;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: isDarkMode ? const Color(0xFF030303) : Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: isDarkMode ? const Color(0xFF111813) : Colors.white,
         elevation: 0,
         leading: GestureDetector(
           onTap: () => Navigator.pop(context),
-          child: const Icon(Icons.arrow_back, color: Colors.black),
+          child: Icon(Icons.arrow_back, color: isDarkMode ? Colors.white : Colors.black),
         ),
         title: Text(
           'Checkout',
           style: GoogleFonts.workSans(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: Colors.black,
+            color: isDarkMode ? Colors.white : Colors.black,
           ),
         ),
         centerTitle: true,

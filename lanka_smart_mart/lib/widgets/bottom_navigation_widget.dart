@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../models/theme_provider.dart';
 
 class BottomNavigationWidget extends StatelessWidget {
   final int selectedIndex;
@@ -12,6 +14,8 @@ class BottomNavigationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = context.watch<ThemeProvider>().isDarkMode;
+
     return Container(
       decoration: BoxDecoration(
         boxShadow: [
@@ -24,7 +28,7 @@ class BottomNavigationWidget extends StatelessWidget {
       ),
       child: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
+        backgroundColor: isDarkMode ? const Color(0xFF2F2E2E) : Colors.white,
         elevation: 0,
         currentIndex: selectedIndex,
         onTap: onItemTapped,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../models/cart_model.dart';
+import '../models/theme_provider.dart';
 import '../widgets/bottom_navigation_widget.dart';
 import 'checkout_screen.dart';
 import 'fruits_screen.dart';
@@ -60,25 +61,26 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     final cartModel = context.watch<CartModel>();
+    final isDarkMode = context.watch<ThemeProvider>().isDarkMode;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: isDarkMode ? const Color(0xFF030303) : Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: isDarkMode ? const Color(0xFF111813) : Colors.white,
         elevation: 0,
         leading: GestureDetector(
           onTap: () => Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => const FruitsScreen()),
           ),
-          child: const Icon(Icons.arrow_back, color: Colors.black),
+          child: Icon(Icons.arrow_back, color: isDarkMode ? Colors.white : Colors.black),
         ),
         title: Text(
           'Shopping Cart',
           style: GoogleFonts.workSans(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: Colors.black,
+            color: isDarkMode ? Colors.white : Colors.black,
           ),
         ),
         centerTitle: true,
@@ -132,7 +134,7 @@ class _CartPageState extends State<CartPage> {
                   // Fixed bottom summary box
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: isDarkMode ? const Color(0xFF111813) : Colors.white,
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(30),
                         topRight: Radius.circular(30),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../widgets/category_button_widget.dart';
 import '../widgets/product_card_widget.dart';
 import '../widgets/bottom_navigation_widget.dart';
@@ -7,7 +8,9 @@ import 'home_screen.dart';
 import 'cart_screen.dart';
 import 'checkout_screen.dart';
 import 'profile/profile_page.dart';
+import 'fruits_screen.dart';
 import '../models/product_model.dart';
+import '../models/theme_provider.dart';
 
 class GroceriesPage extends StatefulWidget {
   const GroceriesPage({super.key});
@@ -38,7 +41,8 @@ class _GroceriesPageState extends State<GroceriesPage> {
       id: '1',
       name: 'Organic Mango',
       unitText: '1 Units',
-      price: 120,
+      price: 120.0,
+      description: 'Fresh organic mango from local farms.',
       imagePath: '',
       category: 'Fruits',
     ),
@@ -46,7 +50,8 @@ class _GroceriesPageState extends State<GroceriesPage> {
       id: '2',
       name: 'Fresh Broccoli',
       unitText: '500g',
-      price: 200,
+      price: 200.0,
+      description: 'Crisp and fresh broccoli.',
       imagePath: '',
       category: 'Vegetables',
     ),
@@ -54,7 +59,8 @@ class _GroceriesPageState extends State<GroceriesPage> {
       id: '3',
       name: 'Organic Eggs',
       unitText: '12 Pieces',
-      price: 240,
+      price: 240.0,
+      description: 'Farm-fresh organic eggs.',
       imagePath: '',
       category: 'Diary',
     ),
@@ -62,7 +68,8 @@ class _GroceriesPageState extends State<GroceriesPage> {
       id: '4',
       name: 'Rice (keeri samba)',
       unitText: '5kg',
-      price: 1100,
+      price: 1100.0,
+      description: 'Premium keeri samba rice.',
       imagePath: '',
       category: 'Beverages',
     ),
@@ -70,7 +77,8 @@ class _GroceriesPageState extends State<GroceriesPage> {
       id: '5',
       name: 'Fresh Tomatoes',
       unitText: '1 kg',
-      price: 150,
+      price: 150.0,
+      description: 'Juicy fresh tomatoes.',
       imagePath: '',
       category: 'Vegetables',
     ),
@@ -78,7 +86,8 @@ class _GroceriesPageState extends State<GroceriesPage> {
       id: '6',
       name: 'Organic Carrots',
       unitText: '500g',
-      price: 120,
+      price: 120.0,
+      description: 'Organic carrots, rich in nutrients.',
       imagePath: '',
       category: 'Vegetables',
     ),
@@ -87,17 +96,17 @@ class _GroceriesPageState extends State<GroceriesPage> {
       id: '7',
       name: 'Strawberry',
       unitText: '500g',
-      price: 400,
+      price: 400.0,
+      description: 'Sweet and fresh strawberries.',
       imagePath: '',
       category: 'Fruits',
-      isOrganic: true,
-      highFiber: true,
     ),
     ProductModel(
       id: '8',
       name: 'Grapes',
       unitText: '100g',
-      price: 140,
+      price: 140.0,
+      description: 'Seedless grapes, perfect for snacking.',
       imagePath: '',
       category: 'Fruits',
     ),
@@ -105,7 +114,8 @@ class _GroceriesPageState extends State<GroceriesPage> {
       id: '9',
       name: 'Orange',
       unitText: '100g',
-      price: 180,
+      price: 180.0,
+      description: 'Juicy oranges full of vitamin C.',
       imagePath: '',
       category: 'Fruits',
     ),
@@ -114,7 +124,8 @@ class _GroceriesPageState extends State<GroceriesPage> {
       id: '10',
       name: 'Fresh Spinach',
       unitText: '250g',
-      price: 80,
+      price: 80.0,
+      description: 'Nutrient-rich fresh spinach.',
       imagePath: '',
       category: 'Vegetables',
     ),
@@ -123,7 +134,8 @@ class _GroceriesPageState extends State<GroceriesPage> {
       id: '11',
       name: 'Fresh Milk',
       unitText: '1 Liter',
-      price: 95,
+      price: 95.0,
+      description: 'Fresh dairy milk.',
       imagePath: '',
       category: 'Diary',
     ),
@@ -131,7 +143,8 @@ class _GroceriesPageState extends State<GroceriesPage> {
       id: '12',
       name: 'Yogurt',
       unitText: '500g',
-      price: 80,
+      price: 80.0,
+      description: 'Creamy yogurt from local dairy.',
       imagePath: '',
       category: 'Diary',
     ),
@@ -163,10 +176,12 @@ class _GroceriesPageState extends State<GroceriesPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = context.watch<ThemeProvider>().isDarkMode;
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: isDarkMode ? const Color(0xFF030303) : Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: isDarkMode ? const Color(0xFF111813) : Colors.white,
         elevation: 0,
         leading: GestureDetector(
           onTap: () => Navigator.pushReplacement(
@@ -175,14 +190,14 @@ class _GroceriesPageState extends State<GroceriesPage> {
               builder: (context) => const HomePage(),
             ),
           ),
-          child: const Icon(Icons.arrow_back, color: Colors.black),
+          child: Icon(Icons.arrow_back, color: isDarkMode ? Colors.white : Colors.black),
         ),
         title: Text(
           'Groceries',
           style: GoogleFonts.workSans(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Colors.black,
+            color: isDarkMode ? Colors.white : Colors.black,
           ),
         ),
         centerTitle: true,
@@ -255,10 +270,20 @@ class _GroceriesPageState extends State<GroceriesPage> {
                       label: categories[index],
                       isSelected: _selectedCategory == index,
                       onPressed: () {
-                        setState(() {
-                          _previousCategory = _selectedCategory;
-                          _selectedCategory = index;
-                        });
+                        if (categories[index] == 'Fruits') {
+                          // Navigate to FruitsScreen
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const FruitsScreen(),
+                            ),
+                          );
+                        } else {
+                          setState(() {
+                            _previousCategory = _selectedCategory;
+                            _selectedCategory = index;
+                          });
+                        }
                       },
                     ),
                   );

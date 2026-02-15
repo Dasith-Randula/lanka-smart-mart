@@ -8,8 +8,8 @@ class CartModel extends ChangeNotifier {
 
   int get itemCount => _items.length;
 
-  int get totalPrice {
-    int total = 0;
+  double get totalPrice {
+    double total = 0.0;
     _items.forEach((key, item) {
       total += item.totalPrice;
     });
