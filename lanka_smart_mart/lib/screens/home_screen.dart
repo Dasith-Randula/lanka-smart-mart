@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -24,11 +26,11 @@ class _HomePageState extends State<HomePage> {
 
   final List<String> branches = ['Maharagama', 'Gampaha', 'Kandy'];
   final List<Map<String, String>> categories = [
-    {'name': 'Groceries', 'icon': '🛒'},
-    {'name': 'Household', 'icon': '🏠'},
-    {'name': 'Personal Care', 'icon': '💄'},
-    {'name': 'Stationery', 'icon': '📝'},
-    {'name': 'More', 'icon': '➕'},
+    {'name': 'Groceries', 'icon': 'assets/images/food.png'},
+    {'name': 'Household', 'icon': 'assets/images/house.png'},
+    {'name': 'Personal Care', 'icon': 'assets/images/flower.png'},
+    {'name': 'Stationery', 'icon': 'assets/images/stationery.png'},
+    {'name': 'Electronics', 'icon': 'assets/images/thunder.png'},
   ];
 
   // Special offers products
@@ -138,15 +140,17 @@ class _HomePageState extends State<HomePage> {
                         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                         child: Row(
                           children: [
-                            Container(
-                              width: 40,
-                              height: 40,
+                            const SizedBox(width: 16),
+                            Positioned(child:Container(
+                              margin: const EdgeInsets.only(left: 42),
+                              width: 50,
+                              height: 50,
                               decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
+                                color: const Color(0xFFFFFFFF),
+                                borderRadius: BorderRadius.circular(100),
                                 boxShadow: [
                                   BoxShadow(
-                                    offset: const Offset(0, 2),
+                                    offset: const Offset(0, 1),
                                     blurRadius: 4,
                                     color: Colors.black.withOpacity(0.1),
                                   ),
@@ -154,12 +158,13 @@ class _HomePageState extends State<HomePage> {
                               ),
                               child: Center(
                                 child: Image.asset(
-                                  'assets/images/logo.png',
+                                  'assets/images/logo_green.png',
                                   width: 24,
                                   height: 24,
                                 ),
                               ),
                             ),
+                          ),
                             const SizedBox(width: 12),
                             Text(
                               'LankaSmartMart',
@@ -262,25 +267,21 @@ class _HomePageState extends State<HomePage> {
                               padding: const EdgeInsets.symmetric(horizontal: 16),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.grey[200],
+                                  image: DecorationImage(
+                                    image: AssetImage('assets/images/Promo_${index + 1}.jpg'),
+                                    fit: BoxFit.cover,
+                                  ),
                                   borderRadius: BorderRadius.circular(16),
                                 ),
                                 child: Stack(
                                   children: [
-                                    Center(
-                                      child: Icon(
-                                        Icons.image,
-                                        size: 64,
-                                        color: Colors.grey[400],
-                                      ),
-                                    ),
                                     Positioned(
-                                      bottom: 12,
-                                      right: 12,
+                                      bottom: 20,
+                                      right: 140,
                                       child: ElevatedButton(
                                         onPressed: () {},
                                         style: ElevatedButton.styleFrom(
-                                          backgroundColor: const Color(0xFF13EC5B),
+                                          backgroundColor: Color(0xFF13EC5B),
                                           shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(8),
                                           ),
@@ -382,10 +383,13 @@ class _HomePageState extends State<HomePage> {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text(
+                                      Image.asset(
                                         categories[index]['icon']!,
-                                        style: const TextStyle(fontSize: 32),
-                                      ),
+                                        width: 50,
+                                        height: 50,
+                                        fit: BoxFit.contain
+                                        ),
+
                                       const SizedBox(height: 8),
                                       Text(
                                         categories[index]['name']!,
@@ -456,16 +460,14 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                               Container(
-                                width: 100,
-                                height: 100,
+                                width: 130,
+                                height: 180,
                                 decoration: BoxDecoration(
-                                  color: Colors.grey[200],
+                                  image: DecorationImage(
+                                    image: AssetImage('assets/images/Vegitables.jpg'),
+                                    fit: BoxFit.cover,
+                                  ),
                                   borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Icon(
-                                  Icons.image,
-                                  size: 48,
-                                  color: Colors.grey[400],
                                 ),
                               ),
                             ],

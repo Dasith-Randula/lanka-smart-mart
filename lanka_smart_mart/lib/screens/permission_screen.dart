@@ -63,39 +63,24 @@ class _PermissionScreenState extends State<PermissionScreen> {
                       width: 379,
                       height: 192,
                       decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Center(
-                        child: Icon(
-                          Icons.image,
-                          size: 64,
-                          color: Colors.grey[400],
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/Bucket.jpg'),
+                          fit: BoxFit.cover,
                         ),
+                        borderRadius: BorderRadius.circular(16),
                       ),
                     ),
                     Positioned(
                       bottom: -20,
-                      left: 16,
-                      child: Container(
-                        width: 145,
-                        height: 145,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(12),
-                          boxShadow: [
-                            BoxShadow(
-                              offset: const Offset(0, 8),
-                              blurRadius: 15,
-                              color: Colors.black.withOpacity(0.25),
-                            ),
-                          ],
-                        ),
+                      left: -25,
+                      child: SizedBox(
+                        width: 180,
+                        height: 180,
                         child: Center(
-                          child: Icon(
-                            Icons.image,
-                            size: 48,
-                            color: Colors.grey[400],
+                          child: Image.asset(
+                            'assets/images/uber.png',
+                            width: 165,
+                            height: 165,
                           ),
                         ),
                       ),
