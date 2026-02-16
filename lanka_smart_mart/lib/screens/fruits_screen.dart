@@ -35,6 +35,213 @@ class _FruitsScreenState extends State<FruitsScreen> {
     'Bakery',
   ];
 
+  final List<ProductModel> allProducts = [
+    // Fruits
+    ProductModel(
+      id: '1',
+      name: 'Organic Mango',
+      unitText: '1 Units',
+      price: 120.0,
+      description: 'Fresh organic mango from local farms.',
+      imagePath: 'assets/images/mango.jpg',
+      category: 'Fruits',
+    ),
+    ProductModel(
+      id: '2',
+      name: 'Fresh Avocado',
+      unitText: '500g',
+      price: 200.0,
+      description: 'Crisp and fresh avocado.',
+      imagePath: 'assets/images/Avocado.jpg',
+      category: 'Fruits',
+    ),
+    ProductModel(
+      id: '3',
+      name: 'Banana',
+      unitText: '1 kg',
+      price: 150.0,
+      description: 'Sweet and ripe bananas.',
+      imagePath: 'assets/images/banana.jpg',
+      category: 'Fruits',
+    ),
+    ProductModel(
+      id: '4',
+      name: 'Apple',
+      unitText: '500g',
+      price: 180.0,
+      description: 'Crisp and juicy fresh apples.',
+      imagePath: 'assets/images/apple.jpg',
+      category: 'Fruits',
+    ),
+    ProductModel(
+      id: '5',
+      name: 'Kiwi',
+      unitText: '500g',
+      price: 220.0,
+      description: 'Fresh and tangy kiwi fruits.',
+      imagePath: 'assets/images/kiwi.jpg',
+      category: 'Fruits',
+    ),
+    // More Fruits
+    ProductModel(
+      id: '6',
+      name: 'Strawberry',
+      unitText: '500g',
+      price: 400.0,
+      description: 'Sweet and fresh strawberries.',
+      imagePath: 'assets/images/Strawberry.jpg',
+      category: 'Fruits',
+    ),
+    ProductModel(
+      id: '7',
+      name: 'Grapes',
+      unitText: '100g',
+      price: 140.0,
+      description: 'Seedless grapes, perfect for snacking.',
+      imagePath: 'assets/images/grapes.jpg',
+      category: 'Fruits',
+    ),
+    ProductModel(
+      id: '8',
+      name: 'Orange',
+      unitText: '100g',
+      price: 180.0,
+      description: 'Juicy oranges full of vitamin C.',
+      imagePath: 'assets/images/Orange.jpg',
+      category: 'Fruits',
+    ),
+    ProductModel(
+      id: '9',
+      name: 'Pineapple',
+      unitText: '1 Unit',
+      price: 250.0,
+      description: 'Sweet and tropical pineapple.',
+      imagePath: 'assets/images/pineapple.jpg',
+      category: 'Fruits',
+    ),
+    ProductModel(
+      id: '10',
+      name: 'Watermelon',
+      unitText: '2 kg',
+      price: 300.0,
+      description: 'Juicy and refreshing watermelon.',
+      imagePath: 'assets/images/watermelon.jpg',
+      category: 'Fruits',
+    ),
+    // Vegetables
+    ProductModel(
+      id: '11',
+      name: 'Carrot',
+      unitText: '1 kg',
+      price: 100.0,
+      description: 'Fresh crunchy carrots.',
+      imagePath: 'assets/images/carrot.jpg',
+      category: 'Vegetables',
+    ),
+    ProductModel(
+      id: '12',
+      name: 'Spinach',
+      unitText: '500g',
+      price: 80.0,
+      description: 'Nutritious green spinach leaves.',
+      imagePath: 'assets/images/spinach.jpg',
+      category: 'Vegetables',
+    ),
+    ProductModel(
+      id: '13',
+      name: 'Broccoli',
+      unitText: '500g',
+      price: 150.0,
+      description: 'Fresh green broccoli florets.',
+      imagePath: 'assets/images/brocoli.jpg',
+      category: 'Vegetables',
+    ),
+    ProductModel(
+      id: '14',
+      name: 'Lettuce',
+      unitText: '1 Unit',
+      price: 70.0,
+      description: 'Crisp lettuce leaves.',
+      imagePath: 'assets/images/lettuce.jpg',
+      category: 'Vegetables',
+    ),
+    ProductModel(
+      id: '15',
+      name: 'Cucumber',
+      unitText: '500g',
+      price: 90.0,
+      description: 'Fresh cucumbers.',
+      imagePath: 'assets/images/cucumber.jpg',
+      category: 'Vegetables',
+    ),
+    // Dairy
+    ProductModel(
+      id: '16',
+      name: 'Ice Cream',
+      unitText: '1 L',
+      price: 500.0,
+      description: 'Creamy vanilla ice cream.',
+      imagePath: 'assets/images/ice cream.jpg',
+      category: 'Diary',
+    ),
+    ProductModel(
+      id: '17',
+      name: 'Milk',
+      unitText: '1 L',
+      price: 200.0,
+      description: 'Fresh cow milk.',
+      imagePath: 'assets/images/milk.jpg',
+      category: 'Diary',
+    ),
+    ProductModel(
+      id: '18',
+      name: 'Yogurt',
+      unitText: '500g',
+      price: 150.0,
+      description: 'Plain yogurt.',
+      imagePath: 'assets/images/yogurt.jpg',
+      category: 'Diary',
+    ),
+    ProductModel(
+      id: '19',
+      name: 'Eggs',
+      unitText: '12 Units',
+      price: 250.0,
+      description: 'Fresh farm eggs.',
+      imagePath: 'assets/images/egg.jpg',
+      category: 'Diary',
+    ),
+    // Bakery
+    ProductModel(
+      id: '20',
+      name: 'Bread',
+      unitText: '1 Loaf',
+      price: 120.0,
+      description: 'Fresh baked bread.',
+      imagePath: 'assets/images/Bread.jpg',
+      category: 'Bakery',
+    ),
+    ProductModel(
+      id: '21',
+      name: 'Biscuits',
+      unitText: '200g',
+      price: 180.0,
+      description: 'Assorted biscuits.',
+      imagePath: 'assets/images/buiscuit.jpg',
+      category: 'Bakery',
+    ),
+    // Rice
+    ProductModel(
+      id: '22',
+      name: 'Rice',
+      unitText: '1 kg',
+      price: 300.0,
+      description: 'Premium basmati rice.',
+      imagePath: 'assets/images/rice.jpg',
+      category: 'Bakery',
+    ),
+  ];
+
   final List<ProductModel> fruitsProducts = [
     ProductModel(
       id: '1',
@@ -42,7 +249,7 @@ class _FruitsScreenState extends State<FruitsScreen> {
       unitText: '1 Unit',
       price: 120.0,
       description: 'Fresh organic mango picked from local farms.',
-      imagePath: '',
+      imagePath: 'assets/images/mango.jpg',
       category: 'Fruits',
     ),
     ProductModel(
@@ -51,7 +258,7 @@ class _FruitsScreenState extends State<FruitsScreen> {
       unitText: '500g',
       price: 400.0,
       description: 'Sweet and fresh strawberries.',
-      imagePath: '',
+      imagePath: 'assets/images/Strawberry.jpg',
       category: 'Fruits',
     ),
     ProductModel(
@@ -60,7 +267,7 @@ class _FruitsScreenState extends State<FruitsScreen> {
       unitText: '100g',
       price: 140.0,
       description: 'Seedless grapes, perfect for snacking.',
-      imagePath: '',
+      imagePath: 'assets/images/grapes.jpg',
       category: 'Fruits',
     ),
     ProductModel(
@@ -69,21 +276,86 @@ class _FruitsScreenState extends State<FruitsScreen> {
       unitText: '100g',
       price: 180.0,
       description: 'Juicy oranges full of vitamin C.',
-      imagePath: '',
+      imagePath: 'assets/images/Orange.jpg',
+      category: 'Fruits',
+    ),
+    ProductModel(
+      id: '10',
+      name: 'Pears',
+      unitText: '500g',
+      price: 200.0,
+      description: 'Fresh and juicy pears.',
+      imagePath: 'assets/images/pears.jpg',
+      category: 'Fruits',
+    ),
+    ProductModel(
+      id: '11',
+      name: 'Pomegranate',
+      unitText: '1 Unit',
+      price: 150.0,
+      description: 'Sweet and tangy pomegranate.',
+      imagePath: 'assets/images/pomagrante.jpg',
+      category: 'Fruits',
+    ),
+    ProductModel(
+      id: '12',
+      name: 'Kiwi',
+      unitText: '500g',
+      price: 220.0,
+      description: 'Fresh and tangy kiwi fruits.',
+      imagePath: 'assets/images/kiwi.jpg',
+      category: 'Fruits',
+    ),
+    ProductModel(
+      id: '13',
+      name: 'Papaya',
+      unitText: '1 Unit',
+      price: 180.0,
+      description: 'Ripe and sweet papaya.',
+      imagePath: 'assets/images/papaya.jpg',
+      category: 'Fruits',
+    ),
+    ProductModel(
+      id: '14',
+      name: 'Peach',
+      unitText: '500g',
+      price: 250.0,
+      description: 'Juicy and delicious peaches.',
+      imagePath: 'assets/images/peach.jpg',
+      category: 'Fruits',
+    ),
+    ProductModel(
+      id: '15',
+      name: 'Berry',
+      unitText: '200g',
+      price: 300.0,
+      description: 'Mixed fresh berries.',
+      imagePath: 'assets/images/berry.jpg',
       category: 'Fruits',
     ),
   ];
 
   List<ProductModel> get filteredProducts {
-    if (_searchQuery.isEmpty) {
-      return fruitsProducts;
+    List<ProductModel> filtered;
+
+    // Filter by category
+    if (_selectedCategory == 0) {
+      // All Items shows all products
+      filtered = allProducts;
+    } else {
+      filtered = allProducts
+          .where((product) => product.category == categories[_selectedCategory])
+          .toList();
     }
-    return fruitsProducts
+
+    // Filter by search query
+    if (_searchQuery.isEmpty) {
+      return filtered;
+    }
+    return filtered
         .where((product) =>
             product.name.toLowerCase().contains(_searchQuery.toLowerCase()) ||
-            product.unitText
-                .toLowerCase()
-                .contains(_searchQuery.toLowerCase()))
+            product.unitText.toLowerCase().contains(_searchQuery.toLowerCase()))
         .toList();
   }
 
@@ -106,7 +378,7 @@ class _FruitsScreenState extends State<FruitsScreen> {
           child: Icon(Icons.arrow_back, color: isDarkMode ? Colors.white : Colors.black),
         ),
         title: Text(
-          'Fruits',
+          _selectedCategory == 0 ? 'All Items' : categories[_selectedCategory],
           style: GoogleFonts.workSans(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -144,7 +416,7 @@ class _FruitsScreenState extends State<FruitsScreen> {
                 padding: const EdgeInsets.all(16),
                 child: TextField(
                   decoration: InputDecoration(
-                    hintText: 'Search fruits...',
+                    hintText: 'Search ${_selectedCategory == 0 ? 'products' : categories[_selectedCategory].toLowerCase()}...',
                     hintStyle: TextStyle(color: Colors.grey[400]),
                     prefixIcon: const Icon(Icons.search, color: Colors.grey),
                     suffixIcon: GestureDetector(
@@ -183,20 +455,9 @@ class _FruitsScreenState extends State<FruitsScreen> {
                       label: categories[index],
                       isSelected: _selectedCategory == index,
                       onPressed: () {
-                        // NAVIGATION LOGIC FOR ALL ITEMS
-                        if (index == 0) {
-                          // All Items -> navigate back to Grocery
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const GroceriesPage(),
-                            ),
-                          );
-                        } else {
-                          setState(() {
-                            _selectedCategory = index;
-                          });
-                        }
+                        setState(() {
+                          _selectedCategory = index;
+                        });
                       },
                     ),
                   );
@@ -208,7 +469,7 @@ class _FruitsScreenState extends State<FruitsScreen> {
               child: filteredProducts.isEmpty
                   ? Center(
                       child: Text(
-                        'No fruits found',
+                        'No ${_selectedCategory == 0 ? 'products' : categories[_selectedCategory].toLowerCase()} found',
                         style: GoogleFonts.workSans(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,

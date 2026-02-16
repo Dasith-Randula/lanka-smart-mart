@@ -77,9 +77,39 @@ flutter:
     - assets/images/Promo_1.jpg
     - assets/images/Promo_2.jpg
     - assets/images/Promo_3.jpg
-    - assets/images/Vegitables.jpg
-
-
+    - assets/images/Vegitables.png
+    - assets/images/Avocado.jpg
+    - assets/images/Bread.jpg
+    - assets/images/Orange.jpg
+    - assets/images/Coconut.jpg
+    - assets/images/mango.jpg
+    - assets/images/brocoli.jpg
+    - assets/images/egg.jpg
+    - assets/images/rice.jpg
+    - assets/images/berry.jpg
+    - assets/images/grapes.jpg
+    - assets/images/apple.jpg
+    - assets/images/banana.jpg
+    - assets/images/kiwi.jpg
+    - assets/images/pineapple.jpg
+    - assets/images/watermelon.jpg
+    - assets/images/Strawberry.jpg
+    - assets/images/pears.jpg
+    - assets/images/pomagrante.jpg
+    - assets/images/papaya.jpg
+    - assets/images/peach.jpg
+    - assets/images/carrot.jpg
+    - assets/images/spinach.jpg
+    - assets/images/lettuce.jpg
+    - assets/images/cucumber.jpg
+    - assets/images/milk.jpg
+    - assets/images/yogurt.jpg
+    - assets/images/ice cream.jpg
+    - assets/images/buiscuit.jpg    
+    - assets/images/Track.jpg
+    - assets/images/Profile.jpg    
+    - assets/images/visa.png
+    - assets/images/master card.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

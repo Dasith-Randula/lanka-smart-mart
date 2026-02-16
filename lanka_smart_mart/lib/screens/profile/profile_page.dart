@@ -179,11 +179,10 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                 width: 2,
                               ),
                             ),
-                            child: Center(
-                              child: Icon(
-                                Icons.person,
-                                size: 40,
-                                color: Colors.grey[400],
+                            child: ClipOval(
+                              child: Image.asset(
+                                'assets/images/Profile.jpg',
+                                fit: BoxFit.cover,
                               ),
                             ),
                           ),

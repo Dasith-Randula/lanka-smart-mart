@@ -99,15 +99,11 @@ class _StrawberryDetailsPageState extends State<StrawberryDetailsPage> {
                 Center(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
-                    child: Container(
+                    child: Image.asset(
+                      widget.product.imagePath!,
                       width: 280,
                       height: 280,
-                      color: Colors.grey[200],
-                      child: Icon(
-                        Icons.image,
-                        size: 100,
-                        color: Colors.grey[400],
-                      ),
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
@@ -239,33 +235,15 @@ class _StrawberryDetailsPageState extends State<StrawberryDetailsPage> {
                 ),
                 const SizedBox(height: 28),
 
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-
-                    // Title
-                    Text(
-                      "Description",
-                      style: GoogleFonts.workSans(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-
-                    const SizedBox(height: 12),
-
-                    // Description Body
-                    Text(
-                      "Fresh Strawberry 🍓\n"
-                      "Sweet, juicy, and hand picked for quality. These fresh strawberries are packed with natural flavor and nutrients perfect for snacking, desserts, smoothies or breakfast bowls. Enjoy farm fresh goodness delivered straight to your doorstep.",
-                      style: GoogleFonts.workSans(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black87,
-                        height: 1.6,
-                      ),
-                    ),
-                  ],
+                // Description
+                Text(
+                  widget.product.description.isNotEmpty
+                      ? widget.product.description
+                      : 'Fresh Strawberry 🍓\nSweet, juicy and hand picked for quality.',
+                  style: GoogleFonts.workSans(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
                 const SizedBox(height: 40),
 

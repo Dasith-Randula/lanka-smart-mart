@@ -245,9 +245,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Center(
-                    child: Text(
-                      '💳',
-                      style: GoogleFonts.workSans(fontSize: 24),
+                    child: Image.asset(
+                      'assets/images/visa.png',
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),
@@ -344,9 +344,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Center(
-                    child: Text(
-                      '💳',
-                      style: GoogleFonts.workSans(fontSize: 24),
+                    child: Image.asset(
+                      'assets/images/master card.png',
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),

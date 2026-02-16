@@ -284,17 +284,13 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
       child: Stack(
         children: [
           // Background image (placeholder for delivery truck)
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              color: Colors.grey[200], // Placeholder color
-            ),
-            child: const Center(
-              child: Icon(
-                Icons.local_shipping,
-                size: 60,
-                color: Colors.grey,
-              ),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: Image.asset(
+              'assets/images/Track.jpg',
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: double.infinity,
             ),
           ),
           // Location pin

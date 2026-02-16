@@ -59,13 +59,21 @@ class ProductCardWidget extends StatelessWidget {
                 color: Colors.grey[200],
                 child: Stack(
                   children: [
-                    Center(
-                      child: Icon(
-                        Icons.image,
-                        size: 48,
-                        color: Colors.grey[400],
-                      ),
-                    ),
+                    // Display product image if available, otherwise show placeholder
+                    product.imagePath != null && product.imagePath!.isNotEmpty
+                        ? Image.asset(
+                            product.imagePath!,
+                            width: double.infinity,
+                            height: 150,
+                            fit: BoxFit.cover,
+                          )
+                        : Center(
+                            child: Icon(
+                              Icons.image,
+                              size: 48,
+                              color: Colors.grey[400],
+                            ),
+                          ),
                     // Add button
                     Positioned(
                       bottom: 8,

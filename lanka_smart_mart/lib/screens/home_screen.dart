@@ -37,81 +37,40 @@ class _HomePageState extends State<HomePage> {
   final List<ProductModel> specialOffers = [
     ProductModel(
       id: '101',
-      name: 'Strawberry Special',
+      name: 'Organic Avocado',
       category: 'Fruits',
       unitText: '500g',
       price: 320.0,
-      description: 'Crisp and juicy fresh apples.',
-      imagePath: '',
+      description: 'Crisp and juicy fresh avocado.',
+      imagePath: 'assets/images/Avocado.jpg',
     ),
     ProductModel(
       id: '102',
-      name: 'Fresh Mango Pack',
-      category: 'Fruits',
-      unitText: '1 kg',
+      name: 'Whole Bread',
+      category: 'Bakery',
+      unitText: '400 g',
       price: 240.0,
-      description: 'Crisp and juicy fresh apples.',
-      imagePath: '',
-    ),
-    ProductModel(
-      id: '103',
-      name: 'Organic Broccoli',
-      unitText: '400g',
-      price: 180.0,
-      description: 'Fresh organic broccoli rich in nutrients.',
-      imagePath: '',
-      category: 'Vegetables',
+      description: 'Fresh whole wheat bread.',
+      imagePath: 'assets/images/Bread.jpg',
     ),
     ProductModel(
       id: '104',
-      name: 'Fresh Apples',
-      unitText: '1 kg',
+      name: 'Orange',
+      unitText: '100 g',
       price: 250.0,
-      description: 'Crisp and juicy fresh apples.',
-      imagePath: '',
+      description: 'Crisp and juicy fresh oranges.',
+      imagePath: 'assets/images/Orange.jpg',
       category: 'Fruits',
     ),
     ProductModel(
       id: '105',
-      name: 'Carrot Bundle',
-      category: 'Vegetables',
+      name: 'Coconut',
+      category: 'All Items',
       unitText: '800g',
       price: 100.0,
-      description: 'Crisp and juicy fresh apples.',
-      imagePath: '',
+      description: 'Coconut.',
+      imagePath: 'assets/images/Coconut.jpg',
     ),
-    ProductModel(
-      id: '106',
-      name: 'Orange Juice',
-      category: 'Beverages',
-      unitText: '1 Liter',
-      price: 280.0,
-      description: 'Crisp and juicy fresh apples.',
-      imagePath: '',
-    ),
-  ];
-
-  // Home products list
-  final List<ProductModel> homeProducts = [
-    ProductModel(
-      id: '1',
-      name: 'Organic Mango',
-      unitText: '1 Unit',
-      price: 120.0,
-      description: 'Fresh organic mango picked from local farms.',
-      imagePath: '',
-      category: 'Fruits',
-    ),
-    ProductModel(
-      id: '2',
-      name: 'Fresh Broccoli',
-      unitText: '500g',
-      price: 200.0,
-      description: 'Crisp and fresh broccoli.',
-      imagePath: '',
-      category: 'Vegetables',
-    ),
-    // Add more as per actual list
   ];
 
   @override
@@ -460,11 +419,11 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                               Container(
-                                width: 130,
+                                width: 180,
                                 height: 180,
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
-                                    image: AssetImage('assets/images/Vegitables.jpg'),
+                                    image: AssetImage('assets/images/Vegitables.png'),
                                     fit: BoxFit.cover,
                                   ),
                                   borderRadius: BorderRadius.circular(12),
@@ -515,8 +474,32 @@ class _HomePageState extends State<HomePage> {
                           itemCount: specialOffers.length,
                           itemBuilder: (context, index) {
                             final product = specialOffers[index];
-                            return ProductCardWidget(
-                              product: product,
+                            return Stack(
+                              children: [
+                                ProductCardWidget(
+                                  product: product,
+                                ),
+                                Positioned(
+                                  top: 8,
+                                  left: 8,
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8, vertical: 4),
+                                    decoration: BoxDecoration(
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Text(
+                                      '20% off',
+                                      style: GoogleFonts.workSans(
+                                        color: Colors.white,
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             );
                           },
                         ),
