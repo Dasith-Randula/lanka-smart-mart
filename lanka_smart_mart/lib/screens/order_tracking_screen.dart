@@ -7,6 +7,7 @@ import 'cart_screen.dart';
 import 'checkout_screen.dart';
 import 'payment_screen.dart';
 import 'order_tracking_map_screen.dart';
+import 'profile/profile_page.dart';
 
 class OrderTrackingScreen extends StatefulWidget {
   const OrderTrackingScreen({super.key});
@@ -177,6 +178,12 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
               context,
               MaterialPageRoute(builder: (context) => const CheckoutPage()),
             );
+          } else if (index == 4) {
+            // Profile
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const ProfilePage()),
+            );
           }
         },
       ),
@@ -275,9 +282,9 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withOpacity(0.2),
             blurRadius: 8,
-            offset: const Offset(0, 4),
+            offset: const Offset(0, 8),
           ),
         ],
       ),
@@ -295,27 +302,25 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
           ),
           // Location pin
           Positioned(
-            top: 16,
+            top: 5,
             right: 16,
             child: Container(
-              width: 40,
-              height: 40,
-              decoration: const BoxDecoration(
-                color: Colors.white,
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                image: const DecorationImage(
+                  image: AssetImage('assets/images/Location.png'),
+                  fit: BoxFit.contain,
+                ),
                 shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                Icons.location_on,
-                color: Colors.red,
-                size: 24,
               ),
             ),
           ),
           // Track Now Button
           Positioned(
             bottom: 16,
-            left: 16,
-            right: 16,
+            left: 70,
+            right: 70,
             child: ElevatedButton(
               onPressed: () => Navigator.push(
                 context,
@@ -325,7 +330,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.orange,
-                padding: const EdgeInsets.symmetric(vertical: 12),
+                padding: const EdgeInsets.symmetric(vertical: 10),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),

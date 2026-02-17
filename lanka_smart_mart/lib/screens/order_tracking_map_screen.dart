@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class OrderTrackingMapScreen extends StatefulWidget {
@@ -10,10 +9,6 @@ class OrderTrackingMapScreen extends StatefulWidget {
 }
 
 class _OrderTrackingMapScreenState extends State<OrderTrackingMapScreen> {
-  GoogleMapController? _mapController;
-  LatLng _orderLocation = const LatLng(6.9271, 79.8612); // Colombo
-  LatLng _userLocation = const LatLng(6.9271, 79.8612); // Same for demo
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,121 +29,207 @@ class _OrderTrackingMapScreenState extends State<OrderTrackingMapScreen> {
         ),
         centerTitle: true,
       ),
-      body: Stack(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              _buildTrackingStatus(),
+              const SizedBox(height: 24),
+              _buildMapPlaceholder(),
+              const SizedBox(height: 24),
+              _buildTrackingDetails(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTrackingStatus() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      color: const Color(0xFFF5F5F5),
+      child: Column(
         children: [
-          GoogleMap(
-            initialCameraPosition: CameraPosition(
-              target: _orderLocation,
-              zoom: 15,
+          Container(
+            width: 60,
+            height: 60,
+            decoration: BoxDecoration(
+              color: const Color(0xFF13EC5B),
+              shape: BoxShape.circle,
             ),
-            onMapCreated: (controller) {
-              _mapController = controller;
-            },
-            markers: {
-              Marker(
-                markerId: const MarkerId('order'),
-                position: _orderLocation,
-                infoWindow: const InfoWindow(title: 'Order Location'),
-              ),
-              Marker(
-                markerId: const MarkerId('user'),
-                position: _userLocation,
-                infoWindow: const InfoWindow(title: 'Your Location'),
-                icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-              ),
-            },
-            myLocationEnabled: true,
-            myLocationButtonEnabled: true,
-          ),
-          // Zoom Controls
-          Positioned(
-            right: 16,
-            top: 100,
-            child: Column(
-              children: [
-                FloatingActionButton(
-                  mini: true,
-                  onPressed: () {
-                    _mapController?.animateCamera(CameraUpdate.zoomIn());
-                  },
-                  child: const Icon(Icons.add),
-                ),
-                const SizedBox(height: 8),
-                FloatingActionButton(
-                  mini: true,
-                  onPressed: () {
-                    _mapController?.animateCamera(CameraUpdate.zoomOut());
-                  },
-                  child: const Icon(Icons.remove),
-                ),
-              ],
-            ),
-          ),
-          // Track Button
-          Positioned(
-            right: 16,
-            bottom: 120,
-            child: FloatingActionButton(
-              onPressed: () {
-                _mapController?.animateCamera(
-                  CameraUpdate.newLatLng(_orderLocation),
-                );
-              },
-              child: const Icon(Icons.my_location),
-            ),
-          ),
-          // Arriving Time Box
-          Positioned(
-            bottom: 16,
-            left: 16,
-            right: 16,
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
+            child: const Center(
+              child: Icon(
+                Icons.local_shipping,
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 8,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
+                size: 32,
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Arriving in',
-                        style: GoogleFonts.workSans(
-                          fontSize: 14,
-                          color: Colors.grey[600],
-                        ),
-                      ),
-                      Text(
-                        '15 minutes',
-                        style: GoogleFonts.workSans(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Icon(
-                    Icons.delivery_dining,
-                    size: 32,
-                    color: Color(0xFF13EC5B),
-                  ),
-                ],
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'Order on the way!',
+            style: GoogleFonts.workSans(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Order ID: #123456789',
+            style: GoogleFonts.workSans(
+              fontSize: 13,
+              color: Colors.grey[600],
+            ),
+          ),
+          const SizedBox(height: 12),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              color: const Color(0xFF13EC5B).withOpacity(0.2),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Text(
+              'Arriving in 15 minutes',
+              style: GoogleFonts.workSans(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: const Color(0xFF13EC5B),
               ),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildMapPlaceholder() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Container(
+        height: 280,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          color: Colors.grey[200],
+          border: Border.all(color: Colors.grey[300]!, width: 1),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.location_on_outlined,
+              size: 80,
+              color: Colors.grey[400],
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Live Map Tracking',
+              style: GoogleFonts.workSans(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Text(
+                'Live map tracking will be available after Google Maps configuration',
+                style: GoogleFonts.workSans(
+                  fontSize: 13,
+                  color: Colors.grey[600],
+                  height: 1.5,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const SizedBox(height: 20),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.grey[300]!),
+              ),
+              child: Text(
+                'Colombo, Sri Lanka',
+                style: GoogleFonts.workSans(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTrackingDetails() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Delivery Details',
+            style: GoogleFonts.workSans(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Colors.grey[200]!),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildDetailRow('Delivery Address', 'No.25, Main Road, Maharagama'),
+                Divider(color: Colors.grey[200], height: 12),
+                _buildDetailRow('Estimated Time', '15 minutes'),
+                Divider(color: Colors.grey[200], height: 12),
+                _buildDetailRow('Driver', 'Ravi Kumar'),
+                Divider(color: Colors.grey[200], height: 12),
+                _buildDetailRow('Vehicle', 'Toyota Vitz - KA-1234'),
+              ],
+            ),
+          ),
+          const SizedBox(height: 24),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDetailRow(String label, String value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: GoogleFonts.workSans(
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+            color: Colors.grey[600],
+          ),
+        ),
+        Text(
+          value,
+          style: GoogleFonts.workSans(
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+            color: Colors.black,
+          ),
+        ),
+      ],
     );
   }
 }

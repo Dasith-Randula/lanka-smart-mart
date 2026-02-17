@@ -423,11 +423,18 @@ class _CartPageState extends State<CartPage> {
                     width: 80,
                     height: 80,
                     color: Colors.grey[200],
-                    child: Icon(
-                      Icons.image,
-                      size: 32,
-                      color: Colors.grey[400],
-                    ),
+                    child: item.product.imagePath != null && item.product.imagePath!.isNotEmpty
+                        ? Image.asset(
+                            item.product.imagePath!,
+                            width: 80,
+                            height: 80,
+                            fit: BoxFit.cover,
+                          )
+                        : Icon(
+                            Icons.image,
+                            size: 32,
+                            color: Colors.grey[400],
+                          ),
                   ),
                 ),
                 const SizedBox(width: 12),

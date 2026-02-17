@@ -134,7 +134,10 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             const Spacer(),
-                            const Icon(Icons.notifications_none, size: 24),
+                            GestureDetector(
+                              onTap: _showNotificationsPanel,
+                              child: const Icon(Icons.notifications_none, size: 24, color: Colors.black),
+                            ),
                           ],
                         ),
                       ),
@@ -227,7 +230,7 @@ class _HomePageState extends State<HomePage> {
                               child: Container(
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
-                                    image: AssetImage('assets/images/Promo_${index + 1}.jpg'),
+                                    image: AssetImage('assets/images/Promo_${index + 1}.png'),
                                     fit: BoxFit.cover,
                                   ),
                                   borderRadius: BorderRadius.circular(16),
@@ -372,13 +375,13 @@ class _HomePageState extends State<HomePage> {
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: const Color(0xFFC9F5D7),
                             borderRadius: BorderRadius.circular(20),
                             boxShadow: [
                               BoxShadow(
-                                offset: const Offset(0, 2),
+                                offset: const Offset(0, 4),
                                 blurRadius: 6,
-                                color: Colors.black.withOpacity(0.08),
+                                color: Colors.black.withOpacity(0.2),
                               ),
                             ],
                           ),
@@ -389,6 +392,23 @@ class _HomePageState extends State<HomePage> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFF10A958),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Text(
+                                        'LIMITED OFFER',
+                                        style: GoogleFonts.workSans(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.white,
+                                          letterSpacing: 0.5,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
                                     Text(
                                       'Fresh Veggies\nup to 30% Off',
                                       style: GoogleFonts.workSans(
@@ -609,6 +629,166 @@ class _HomePageState extends State<HomePage> {
           ),
         );
       },
+    );
+  }
+
+  void _showNotificationsPanel() {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(24),
+          topRight: Radius.circular(24),
+        ),
+      ),
+      builder: (context) {
+        return Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(24),
+              topRight: Radius.circular(24),
+            ),
+          ),
+          child: SafeArea(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Header
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Notifications',
+                        style: GoogleFonts.workSans(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => Navigator.pop(context),
+                        child: const Icon(Icons.close, size: 24),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(color: Colors.grey[200], height: 1),
+                // Notifications List
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        _buildNotificationItem(
+                          icon: Icons.check_circle,
+                          iconColor: const Color(0xFF13EC5B),
+                          title: 'Order Confirmed',
+                          subtitle: 'Your order #123456 has been confirmed',
+                          time: '2 min ago',
+                        ),
+                        Divider(color: Colors.grey[200], height: 1),
+                        _buildNotificationItem(
+                          icon: Icons.local_shipping,
+                          iconColor: Colors.blue,
+                          title: 'Order Shipped',
+                          subtitle: 'Your order is on the way to you',
+                          time: '25 min ago',
+                        ),
+                        Divider(color: Colors.grey[200], height: 1),
+                        _buildNotificationItem(
+                          icon: Icons.schedule,
+                          iconColor: Colors.orange,
+                          title: 'Delivery Arriving Soon',
+                          subtitle: 'Estimated delivery in 30 minutes',
+                          time: '1 hour ago',
+                        ),
+                        Divider(color: Colors.grey[200], height: 1),
+                        _buildNotificationItem(
+                          icon: Icons.local_offer,
+                          iconColor: Colors.red,
+                          title: 'Special Discount Available',
+                          subtitle: 'Get 20% off on groceries this week',
+                          time: '2 hours ago',
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildNotificationItem({
+    required IconData icon,
+    required Color iconColor,
+    required String title,
+    required String subtitle,
+    required String time,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 48,
+            height: 48,
+            decoration: BoxDecoration(
+              color: iconColor.withOpacity(0.1),
+              shape: BoxShape.circle,
+            ),
+            child: Center(
+              child: Icon(
+                icon,
+                color: iconColor,
+                size: 24,
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: GoogleFonts.workSans(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  subtitle,
+                  style: GoogleFonts.workSans(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.grey[600],
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 8),
+          Text(
+            time,
+            style: GoogleFonts.workSans(
+              fontSize: 11,
+              fontWeight: FontWeight.w400,
+              color: Colors.grey[500],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

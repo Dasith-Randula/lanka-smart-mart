@@ -399,6 +399,7 @@ class _SelectAddressMapScreenState
       const LatLng(6.9271, 80.7789);
   String _selectedAddress = '';
   bool _isLoadingAddress = false;
+  bool _mapAvailable = true;
 
   @override
   void initState() {
@@ -501,146 +502,287 @@ class _SelectAddressMapScreenState
         ),
         centerTitle: true,
       ),
-      body: Stack(
-        children: [
-          GoogleMap(
-            onMapCreated: (controller) =>
-                mapController = controller,
-            initialCameraPosition:
-                CameraPosition(
-              target: _selectedLocation,
-              zoom: 15,
-            ),
-            markers: {
-              Marker(
-                markerId:
-                    const MarkerId('selected'),
-                position:
-                    _selectedLocation,
-                infoWindow: InfoWindow(
-                  title: 'Selected Location',
-                  snippet:
-                      _selectedAddress,
-                ),
-              ),
-            },
-            onTap: _onMapTap,
+      body: _mapAvailable ? _buildMapView() : _buildMapPlaceholder(),
+    );
+  }
+
+  Widget _buildMapView() {
+    return Stack(
+      children: [
+        GoogleMap(
+          onMapCreated: (controller) {
+            mapController = controller;
+          },
+          initialCameraPosition:
+              CameraPosition(
+            target: _selectedLocation,
+            zoom: 15,
           ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: const BorderRadius
-                    .only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color:
-                        Colors.black.withOpacity(
-                            0.1),
-                    blurRadius: 12,
-                    offset: const Offset(0, -4),
-                  ),
-                ],
+          markers: {
+            Marker(
+              markerId:
+                  const MarkerId('selected'),
+              position:
+                  _selectedLocation,
+              infoWindow: InfoWindow(
+                title: 'Selected Location',
+                snippet:
+                    _selectedAddress,
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  mainAxisSize:
-                      MainAxisSize.min,
-                  crossAxisAlignment:
-                      CrossAxisAlignment.start,
-                  children: [
+            ),
+          },
+          onTap: _onMapTap,
+        ),
+        Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: const BorderRadius
+                  .only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color:
+                      Colors.black.withOpacity(
+                          0.1),
+                  blurRadius: 12,
+                  offset: const Offset(0, -4),
+                ),
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisSize:
+                    MainAxisSize.min,
+                crossAxisAlignment:
+                    CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Selected Address',
+                    style: GoogleFonts.workSans(
+                      fontSize: 14,
+                      fontWeight:
+                          FontWeight.w600,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  if (_isLoadingAddress)
+                    const SizedBox(
+                      height: 20,
+                      child:
+                          CircularProgressIndicator(
+                        strokeWidth: 2,
+                        valueColor:
+                            AlwaysStoppedAnimation(
+                          Color(0xFF13EC5B),
+                        ),
+                      ),
+                    )
+                  else
                     Text(
-                      'Selected Address',
+                      _selectedAddress
+                              .isEmpty
+                          ? 'Tap on map to select address'
+                          : _selectedAddress,
                       style: GoogleFonts.workSans(
                         fontSize: 14,
                         fontWeight:
-                            FontWeight.w600,
-                        color: Colors.grey[600],
+                            FontWeight.w500,
+                        color: Colors.black,
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    if (_isLoadingAddress)
-                      const SizedBox(
-                        height: 20,
-                        child:
-                            CircularProgressIndicator(
-                          strokeWidth: 2,
-                          valueColor:
-                              AlwaysStoppedAnimation(
-                            Color(0xFF13EC5B),
-                          ),
-                        ),
-                      )
-                    else
-                      Text(
-                        _selectedAddress
-                                .isEmpty
-                            ? 'Tap on map to select address'
-                            : _selectedAddress,
-                        style: GoogleFonts.workSans(
-                          fontSize: 14,
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton
+                          .styleFrom(
+                        backgroundColor:
+                            const Color(
+                                0xFF13EC5B),
+                        padding:
+                            const EdgeInsets
+                                .symmetric(
+                              vertical: 14,
+                            ),
+                      ),
+                      onPressed:
+                          _selectedAddress
+                                  .isEmpty
+                              ? null
+                              : () => Navigator
+                                  .pop(
+                                context,
+                                _selectedAddress,
+                              ),
+                      child: Text(
+                        'Confirm Address',
+                        style: GoogleFonts
+                            .workSans(
+                          color: Colors.white,
                           fontWeight:
-                              FontWeight.w500,
-                          color: Colors.black,
-                        ),
-                      ),
-                    const SizedBox(height: 16),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        style: ElevatedButton
-                            .styleFrom(
-                          backgroundColor:
-                              const Color(
-                                  0xFF13EC5B),
-                          padding:
-                              const EdgeInsets
-                                  .symmetric(
-                            vertical: 14,
-                          ),
-                        ),
-                        onPressed:
-                            _selectedAddress
-                                    .isEmpty
-                                ? null
-                                : () => Navigator
-                                    .pop(
-                                  context,
-                                  _selectedAddress,
-                                ),
-                        child: Text(
-                          'Confirm Address',
-                          style: GoogleFonts
-                              .workSans(
-                            color: Colors.white,
-                            fontWeight:
-                                FontWeight
-                                    .w600,
-                            fontSize: 16,
-                          ),
+                              FontWeight
+                                  .w600,
+                          fontSize: 16,
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildMapPlaceholder() {
+    return Stack(
+      children: [
+        Container(
+          color: Colors.grey[200],
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.location_on_outlined,
+                  size: 64,
+                  color: Colors.grey[400],
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'Map Loading Error',
+                  style: GoogleFonts.workSans(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Google Maps API key required',
+                  style: GoogleFonts.workSans(
+                    fontSize: 13,
+                    color: Colors.grey[600],
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+        ),
+        Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: const BorderRadius
+                  .only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color:
+                      Colors.black.withOpacity(
+                          0.1),
+                  blurRadius: 12,
+                  offset: const Offset(0, -4),
+                ),
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisSize:
+                    MainAxisSize.min,
+                crossAxisAlignment:
+                    CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Current Location',
+                    style: GoogleFonts.workSans(
+                      fontSize: 14,
+                      fontWeight:
+                          FontWeight.w600,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[100],
+                      borderRadius:
+                          BorderRadius.circular(
+                              8),
+                    ),
+                    child: Text(
+                      'Latitude: ${_selectedLocation.latitude.toStringAsFixed(4)}\nLongitude: ${_selectedLocation.longitude.toStringAsFixed(4)}',
+                      style: GoogleFonts.workSans(
+                        fontSize: 12,
+                        color: Colors.black87,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton
+                          .styleFrom(
+                        backgroundColor:
+                            const Color(
+                                0xFF13EC5B),
+                        padding:
+                            const EdgeInsets
+                                .symmetric(
+                              vertical: 14,
+                            ),
+                      ),
+                      onPressed: () =>
+                          Navigator.pop(
+                        context,
+                        '${_selectedLocation.latitude}, ${_selectedLocation.longitude}',
+                      ),
+                      child: Text(
+                        'Use Current Location',
+                        style: GoogleFonts
+                            .workSans(
+                          color: Colors.white,
+                          fontWeight:
+                              FontWeight
+                                  .w600,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
   @override
   void dispose() {
-    mapController.dispose();
+    if (_mapAvailable) {
+      mapController.dispose();
+    }
     super.dispose();
   }
 }
